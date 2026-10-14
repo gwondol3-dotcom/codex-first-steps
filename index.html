@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Codex 첫걸음 실습교재</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: 왼쪽 고정 목차 + 780px 본문 한 단. 실습마다 "STEP 카드 → 프롬프트 카드 → 확인 체크" 순서가 반복된다. */
+:root {
+  --bg: #F3F8FE;
+  --surface: #FFFFFF;
+  --tint: #E6F1FC;
+  --tint-2: #CFE5F9;
+  --line: #D3E4F6;
+  --ink: #23426B;
+  --text: #34506F;
+  --muted: #6A84A3;
+  --accent: #3F86CC;
+  --accent-soft: #8EC1EE;
+  --aqua: #A9DFE6;
+  --peri: #B9C5F3;
+  --note: #FFF1BF;
+  --note-ink: #6B5310;
+  --warn: #FCE3E6;
+  --warn-ink: #B5414B;
+  --ok: #D8F1E6;
+  --ok-ink: #2E7D5B;
+  --star: #E0A82E;
+  --prompt-bg: #FFFFFF;
+  --prompt-head: #E6F1FC;
+  --code-bg: #2E4A6E;
+  --code-ink: #E6F1FC;
+  --shadow: 0 2px 10px rgba(91, 140, 200, .12);
+
+  --f-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", Consolas, "D2Coding", monospace;
+  --fs-body: 1.0625rem;
+  --fs-small: .9375rem;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1B2B; --surface: #16263B; --tint: #1B2F49; --tint-2: #22406A; --line: #2A4263;
+    --ink: #E3EEFB; --text: #C4D5EA; --muted: #8DA6C4; --accent: #7CB6EE; --accent-soft: #3E6EA3;
+    --aqua: #2F6A73; --peri: #4A5690; --note: #3B3218; --note-ink: #F3D98A; --warn: #43222A; --warn-ink: #F3A3AB;
+    --ok: #1C3B30; --ok-ink: #8FD9B5; --star: #F0C35A; --prompt-bg: #132235; --prompt-head: #1B2F49;
+    --code-bg: #0B1522; --code-ink: #CFE5F9; --shadow: 0 2px 10px rgba(0, 0, 0, .3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1B2B; --surface: #16263B; --tint: #1B2F49; --tint-2: #22406A; --line: #2A4263;
+  --ink: #E3EEFB; --text: #C4D5EA; --muted: #8DA6C4; --accent: #7CB6EE; --accent-soft: #3E6EA3;
+  --aqua: #2F6A73; --peri: #4A5690; --note: #3B3218; --note-ink: #F3D98A; --warn: #43222A; --warn-ink: #F3A3AB;
+  --ok: #1C3B30; --ok-ink: #8FD9B5; --star: #F0C35A; --prompt-bg: #132235; --prompt-head: #1B2F49;
+  --code-bg: #0B1522; --code-ink: #CFE5F9; --shadow: 0 2px 10px rgba(0, 0, 0, .3);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+img { max-width: 100%; }
+.inst > div, .practice-head > div, .hero > div, .step > *, .tile, .note, .vs > *, .grid2 > *, .grid3 > * { min-width: 0; }
+@media (max-width: 520px) { .inst { grid-template-columns: minmax(0, 1fr); } }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body { margin: 0;
+  background: var(--bg); color: var(--text);
+  font-family: var(--f-body); font-size: var(--fs-body); line-height: 1.75;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3, h4 { color: var(--ink); line-height: 1.35; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+code { font-family: var(--f-mono); font-size: .9em; background: var(--tint); color: var(--ink); padding: .1em .4em; border-radius: 6px; }
+
+/* ---------- 상단 바 ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+.topbar-in { display: flex; align-items: center; gap: 12px; padding-block: 10px; padding-inline: 16px; max-width: 1240px; margin: 0 auto; }
+.brand { font-weight: 900; color: var(--ink); font-size: 1rem; white-space: nowrap; }
+.brand span { color: var(--accent); }
+.progress { flex: 1; display: flex; align-items: center; gap: 10px; min-width: 0; justify-content: flex-end; }
+.progress-bar { width: min(220px, 40vw); height: 8px; background: var(--tint-2); border-radius: 99px; overflow: hidden; }
+.progress-bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .3s; }
+.progress-txt { font-size: .8125rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.menu-btn { display: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 6px 12px; font: inherit; font-size: .875rem; font-weight: 700; cursor: pointer; }
+
+/* ---------- 레이아웃 ---------- */
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 48px; }
+nav.toc { position: sticky; top: 70px; align-self: start; max-height: calc(100vh - 90px); overflow-y: auto; padding-block: 28px; }
+.toc-group { font-size: .75rem; letter-spacing: .08em; color: var(--muted); font-weight: 700; margin: 18px 0 6px; }
+.toc a { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 10px; color: var(--text); text-decoration: none; font-size: .9375rem; }
+.toc a:hover { background: var(--tint); }
+.toc a.on { background: var(--tint-2); color: var(--ink); font-weight: 700; }
+.toc a .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex: none; }
+.toc a.done .dot { background: var(--ok-ink); }
+main { min-width: 0; padding-block: 28px 80px; max-width: 800px; }
+
+@media (max-width: 980px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .menu-btn { display: inline-block; }
+  nav.toc {
+    position: fixed; inset: 56px 0 0 0; z-index: 15; background: var(--bg); max-height: none;
+    padding: 12px 16px 40px; border-top: 1px solid var(--line);
+  }
+  nav.toc:not(.open) { display: none; }
+  .progress-bar { display: none; }
+}
+
+/* ---------- 히어로 ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 24px; align-items: center; padding: 28px; background: var(--tint); border-radius: 24px; }
+.hero .chip { display: inline-block; background: var(--surface); color: var(--accent); border: 1.5px solid var(--accent-soft); font-weight: 700; font-size: .875rem; padding: 4px 14px; border-radius: 99px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 900; margin: 14px 0 8px; letter-spacing: -.02em; }
+.hero p { font-size: 1.125rem; }
+.hero img { width: 100%; height: auto; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.tags span { font-size: .8125rem; font-weight: 700; color: var(--ink); padding: 4px 12px; border-radius: 99px; background: var(--tint-2); }
+@media (max-width: 640px) { .hero { grid-template-columns: 1fr; padding: 22px; } .hero img { max-width: 220px; justify-self: center; order: -1; } }
+
+/* ---------- 섹션 ---------- */
+section { padding-top: 56px; }
+.eyebrow { display: inline-block; font-size: .8125rem; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--accent); padding: 3px 12px; border-radius: 99px; }
+:root[data-theme="dark"] .eyebrow { color: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .eyebrow { color: var(--bg); } }
+section > h2 { font-size: clamp(1.6rem, 3.6vw, 2rem); font-weight: 900; margin: 10px 0 6px; letter-spacing: -.01em; }
+.lead { font-size: 1.0625rem; color: var(--text); margin-bottom: 20px; }
+.stack { display: grid; gap: 18px; }
+
+.practice-head { display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 20px; align-items: center; background: var(--tint); border-radius: 22px; padding: 24px; }
+.practice-head h2 { font-size: clamp(1.55rem, 3.4vw, 1.95rem); font-weight: 900; margin: 8px 0 4px; }
+.practice-head img { width: 100%; height: auto; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: var(--fs-small); color: var(--muted); margin-top: 8px; }
+.meta b { color: var(--ink); font-weight: 700; }
+.stars { color: var(--star); letter-spacing: 2px; }
+.goal { margin-top: 12px; background: var(--surface); border-radius: 12px; padding: 12px 16px; font-size: var(--fs-small); }
+.goal b { color: var(--accent); }
+@media (max-width: 560px) { .practice-head { grid-template-columns: 1fr; } .practice-head img { max-width: 120px; order: -1; } }
+
+/* STEP 카드 */
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); display: grid; gap: 14px; }
+.step-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; font-size: .8125rem; font-weight: 900; letter-spacing: .04em; color: #fff; background: var(--ink); padding: 4px 12px; border-radius: 99px; white-space: nowrap; }
+:root[data-theme="dark"] .badge { color: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .badge { color: var(--bg); } }
+.step h3 { font-size: 1.25rem; font-weight: 700; }
+.step ul, .step ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+
+/* 프롬프트 카드 */
+.prompt { border: 1.5px solid var(--accent-soft); border-radius: 14px; background: var(--prompt-bg); overflow: hidden; }
+.prompt-head { display: flex; align-items: center; gap: 10px; background: var(--prompt-head); padding: 8px 10px 8px 14px; }
+.prompt-head .dots { display: flex; gap: 5px; }
+.prompt-head .dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.prompt-head .dots i:nth-child(1) { background: #F28B82; } .prompt-head .dots i:nth-child(2) { background: #FBD46D; } .prompt-head .dots i:nth-child(3) { background: #7FD1AE; }
+.prompt-head .label { flex: 1; font-size: .8125rem; font-weight: 700; color: var(--accent); min-width: 0; }
+.copy { font: inherit; font-size: .875rem; font-weight: 700; color: #fff; background: var(--accent); border: 0; border-radius: 10px; padding: 7px 16px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; }
+.copy:hover { filter: brightness(1.08); }
+.copy.done { background: var(--ok-ink); }
+:root[data-theme="dark"] .copy { color: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .copy { color: var(--bg); } }
+.prompt pre { margin: 0; padding: 16px 18px; white-space: pre-wrap; font-family: var(--f-body); font-size: 1.0625rem; line-height: 1.8; color: var(--ink); }
+.prompt.code pre { font-family: var(--f-mono); font-size: .9375rem; line-height: 1.6; max-height: 320px; overflow: auto; }
+
+/* 안내 박스 */
+.note { border-radius: 12px; padding: 14px 16px; font-size: var(--fs-small); background: var(--note); color: var(--note-ink); }
+.note b { display: block; margin-bottom: 2px; }
+.note.warn { background: var(--warn); color: var(--warn-ink); }
+.note.ok { background: var(--ok); color: var(--ok-ink); }
+.note.info { background: var(--tint); color: var(--text); }
+.note.info b { color: var(--ink); }
+
+/* 체크리스트 */
+.checks { display: grid; gap: 8px; }
+.check { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border-radius: 10px; background: var(--tint); cursor: pointer; font-size: var(--fs-small); }
+.check input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--ok-ink); flex: none; cursor: pointer; }
+.check:has(input:checked) { background: var(--ok); color: var(--ok-ink); }
+.check:has(input:checked) span { text-decoration: line-through; text-decoration-thickness: 1px; }
+.checks-title { font-size: .875rem; font-weight: 700; color: var(--ink); }
+
+/* 설치 */
+.install { display: grid; gap: 18px; }
+.inst { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+.inst img { width: 84px; height: 84px; object-fit: contain; }
+.inst h3 { font-size: 1.2rem; font-weight: 700; margin: 6px 0 6px; }
+.inst ol { margin: 8px 0 0; padding-left: 1.3em; display: grid; gap: 2px; font-size: var(--fs-small); }
+.inst.optional { background: var(--tint); box-shadow: none; }
+.link-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 16px; border-radius: 99px; border: 1.5px solid var(--accent); color: var(--ink); text-decoration: none; font-weight: 700; font-size: .9375rem; background: var(--surface); }
+.link-btn small { color: var(--accent); font-weight: 500; }
+.link-btn:hover { background: var(--tint); }
+@media (max-width: 520px) { .inst { grid-template-columns: 1fr; } .inst img { width: 64px; height: 64px; } }
+
+.tree { font-family: var(--f-mono); font-size: .9rem; background: var(--code-bg); color: var(--code-ink); border-radius: 12px; padding: 16px 18px; overflow-x: auto; line-height: 1.7; white-space: pre; margin: 0; }
+
+/* 표·그리드 */
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.tile h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.tile p { font-size: var(--fs-small); }
+.tile .k { font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
+
+.vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 640px) { .vs { grid-template-columns: 1fr; } }
+.vs .tile.codex { background: var(--tint); border-color: var(--accent-soft); }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.flow span { background: var(--tint-2); color: var(--ink); font-weight: 700; font-size: .875rem; padding: 4px 10px; border-radius: 8px; }
+.flow span + span::before { content: "→ "; color: var(--muted); font-weight: 500; }
+.key { background: var(--ink); color: var(--bg); border-radius: 16px; padding: 22px; text-align: center; }
+.key p { font-size: .95rem; opacity: .85; }
+.key strong { display: block; font-size: clamp(1.25rem, 3vw, 1.6rem); margin-top: 4px; }
+
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: var(--fs-small); background: var(--surface); }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { background: var(--tint); color: var(--ink); font-weight: 700; }
+td.num, th.num { text-align: center; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+
+.names { display: flex; flex-wrap: wrap; gap: 8px; }
+.names span { background: var(--tint-2); color: var(--ink); font-weight: 700; padding: 6px 14px; border-radius: 10px; }
+
+.quiz { background: var(--tint); border-radius: 14px; padding: 18px; }
+.quiz .q { font-weight: 700; color: var(--ink); font-size: 1.1rem; margin-bottom: 12px; }
+.quiz .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.quiz .opts button { font: inherit; font-weight: 700; color: var(--ink); background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px; cursor: pointer; }
+.quiz .opts button.right { background: var(--ok); border-color: var(--ok-ink); color: var(--ok-ink); }
+.quiz .opts button.wrong { background: var(--warn); border-color: var(--warn-ink); color: var(--warn-ink); }
+.quiz .msg { min-height: 1.6em; margin-top: 10px; font-weight: 700; }
+
+.rename { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; }
+.rename .col { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-family: var(--f-mono); font-size: .875rem; line-height: 1.9; overflow-x: auto; }
+.rename .col.after { background: var(--tint); color: var(--ink); font-weight: 500; }
+.rename .arrow { font-size: 1.5rem; color: var(--accent); }
+@media (max-width: 560px) { .rename { grid-template-columns: 1fr; } .rename .arrow { transform: rotate(90deg); justify-self: center; } }
+
+.cycle { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.cycle div { background: var(--tint-2); color: var(--ink); border-radius: 12px; padding: 12px 8px; text-align: center; font-weight: 700; }
+.cycle div:nth-child(2) { background: var(--aqua); } .cycle div:nth-child(3) { background: var(--peri); }
+@media (max-width: 480px) { .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.levels td.stars { font-size: 1rem; }
+
+.final { margin-top: 56px; background: var(--tint); border-radius: 24px; padding: 32px 28px; }
+.final blockquote { margin: 12px 0 16px; font-size: clamp(1.3rem, 3.2vw, 1.75rem); font-weight: 900; color: var(--ink); line-height: 1.5; }
+.final p strong { color: var(--accent); }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: .9375rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 30; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.footer { margin-top: 48px; font-size: .8125rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="toc">목차</button>
+    <div class="brand">Codex <span>첫걸음</span></div>
+    <div class="progress" aria-live="polite">
+      <div class="progress-bar"><i id="progBar"></i></div>
+      <div class="progress-txt" id="progTxt">체크 0 / 0</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" id="toc" aria-label="목차">
+    <div class="toc-group">시작</div>
+    <a href="#intro"><i class="dot"></i>연수 안내</a>
+    <a href="#setup"><i class="dot"></i>0. 설치 및 준비</a>
+    <a href="#app"><i class="dot"></i>앱 화면과 승인 모드</a>
+    <a href="#basics"><i class="dot"></i>Codex에게 일 시키기</a>
+    <div class="toc-group">실습</div>
+    <a href="#p1"><i class="dot"></i>실습 1 · 수업용 타이머</a>
+    <a href="#p2"><i class="dot"></i>실습 2 · 발표자·모둠 편성기</a>
+    <a href="#p3"><i class="dot"></i>실습 3 · 수업용 퀴즈</a>
+    <a href="#p4"><i class="dot"></i>실습 4 · 설문 분석</a>
+    <a href="#p5"><i class="dot"></i>실습 5 · 파일 자동 정리</a>
+    <a href="#mission"><i class="dot"></i>마무리 미션</a>
+    <div class="toc-group">정리</div>
+    <a href="#phrases"><i class="dot"></i>수정 요청 6가지 표현</a>
+    <a href="#review"><i class="dot"></i>전체 점검 프롬프트</a>
+    <a href="#caution"><i class="dot"></i>주의사항</a>
+    <a href="#faq"><i class="dot"></i>이럴 땐 이렇게</a>
+  </nav>
+
+  <main>
+    <!-- ===================== 연수 안내 ===================== -->
+    <div class="hero" id="intro">
+      <div>
+        <span class="chip">2026 강릉교육지원청 생성형AI 연수</span>
+        <h1>교원 대상 Codex 첫걸음</h1>
+        <p>코딩을 몰라도 만드는 나만의 교육용 프로그램</p>
+        <div class="tags"><span>데스크탑 에이전트</span><span>실습 중심 120분</span><span>OpenAI Codex</span></div>
+      </div>
+      <img src="assets/hero.png" alt="노트북 옆에 앉은 로봇 도우미" width="675" height="348">
+    </div>
+
+    <section aria-labelledby="h-goal">
+      <span class="eyebrow">연수 안내</span>
+      <h2 id="h-goal">오늘 할 일</h2>
+      <p class="lead">프로그래밍 언어를 배우지 않습니다. Codex에게 원하는 프로그램을 우리말로 설명하고, 만들어진 프로그램을 직접 실행하면서 고쳐 나갑니다. 아래 <b>복사</b> 버튼을 누르면 프롬프트가 복사되니 Codex 입력창에 붙여 넣으세요.</p>
+      <div class="stack">
+        <div class="step">
+          <div class="checks-title">연수가 끝나면 이런 일을 할 수 있습니다</div>
+          <ol>
+            <li>자연어로 프로그램 제작을 요청할 수 있다.</li>
+            <li>Codex가 만든 프로그램을 직접 실행할 수 있다.</li>
+            <li>실행 결과를 보고 수정 요청을 할 수 있다.</li>
+            <li>기존 프로그램에 새로운 기능을 추가할 수 있다.</li>
+            <li>학교 업무와 수업에 활용할 간단한 도구를 직접 만들 수 있다.</li>
+          </ol>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>순서</th><th class="num">시간</th><th>내용</th></tr></thead>
+            <tbody>
+              <tr><td>1부 · Codex 이해</td><td class="num">15분</td><td>Codex란 무엇인가 · 좋은 요청 방법 · 설치 확인</td></tr>
+              <tr><td>2부 · 첫 프로그램 만들기</td><td class="num">20분</td><td>실습 1. 수업용 타이머</td></tr>
+              <tr><td>3부 · 프로그램 발전시키기</td><td class="num">20분</td><td>실습 2. 발표자 추첨 및 모둠 편성기</td></tr>
+              <tr><td>4부 · 수업 콘텐츠 만들기</td><td class="num">20분</td><td>실습 3. 수업용 퀴즈 게임</td></tr>
+              <tr><td>5부 · 교사업무 자동화</td><td class="num">20분</td><td>실습 4. CSV 설문 결과 자동 분석</td></tr>
+              <tr><td>6부 · 컴퓨터 업무 자동화</td><td class="num">15분</td><td>실습 5. 학교 파일 자동 정리</td></tr>
+              <tr><td>7부 · 나만의 프로그램</td><td class="num">10분</td><td>자유 실습 · 마무리 미션</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 설치 ===================== -->
+    <section id="setup" aria-labelledby="h-setup">
+      <span class="eyebrow">PART 0 · 준비</span>
+      <h2 id="h-setup">설치 및 실습 준비</h2>
+      <p class="lead">위에서부터 순서대로 진행하세요. 1~5단계는 꼭 필요하고, 6단계는 선택입니다. 이미 끝낸 단계는 체크만 하고 넘어가면 됩니다.</p>
+      <div class="install">
+        <div class="inst">
+          <img src="assets/login.png" alt="" width="483" height="417">
+          <div>
+            <span class="badge">STEP 1</span>
+            <h3>ChatGPT 계정 준비하기</h3>
+            <p>Codex는 ChatGPT 계정으로 로그인해서 씁니다. <b>Plus 이상 구독</b>이어야 원활하게 사용할 수 있습니다. 이미 ChatGPT를 쓰고 있다면 같은 계정을 그대로 씁니다.</p>
+            <ol>
+              <li>chatgpt.com에 접속해 로그인합니다.</li>
+              <li>왼쪽 아래 내 이름(프로필)을 누릅니다.</li>
+              <li>현재 요금제(Plus / Pro / Business 등)를 확인합니다.</li>
+              <li>비밀번호를 미리 확인해 둡니다.</li>
+            </ol>
+            <a class="link-btn" href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT 열기 <small>chatgpt.com</small></a>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>ChatGPT에 로그인했고 구독 등급을 확인했다</span></label></div>
+          </div>
+        </div>
+
+        <div class="inst">
+          <img src="assets/browser.png" alt="" width="807" height="755">
+          <div>
+            <span class="badge">STEP 2</span>
+            <h3>크롬 브라우저 설치하기</h3>
+            <p>Codex가 만든 HTML 프로그램(타이머, 퀴즈, 설문 분석)을 실행할 때 씁니다. 이미 설치되어 있다면 건너뜁니다. 기본 브라우저로 설정해 두면 HTML 파일을 더블클릭했을 때 바로 크롬으로 열립니다.</p>
+            <ol>
+              <li>아래 링크에 접속해 [Chrome 다운로드]를 누릅니다.</li>
+              <li>내려받은 설치 파일을 실행합니다.</li>
+              <li>설치가 끝나면 크롬이 자동으로 열립니다.</li>
+            </ol>
+            <a class="link-btn" href="https://www.google.com/chrome/" target="_blank" rel="noopener">Chrome 다운로드 <small>google.com/chrome</small></a>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>크롬이 설치되어 있다</span></label></div>
+          </div>
+        </div>
+
+        <div class="inst">
+          <img src="assets/download.png" alt="" width="484" height="530">
+          <div>
+            <span class="badge">STEP 3</span>
+            <h3>Codex 데스크탑 앱 설치하기</h3>
+            <p>오늘 연수는 Codex 데스크탑 앱으로 진행합니다. 폴더를 열고 대화하면 Codex가 파일을 직접 만들고 고쳐 줍니다. 앱을 설치하면 터미널용 <code>codex</code> 명령도 함께 설치됩니다.</p>
+            <ol>
+              <li>chatgpt.com/codex에 접속합니다.</li>
+              <li>Windows용 앱 다운로드 버튼을 누릅니다. Microsoft Store로 연결될 수 있습니다.</li>
+              <li>[설치] 또는 [받기]를 누릅니다.</li>
+              <li>시작 메뉴에서 <b>Codex</b>를 실행합니다.</li>
+            </ol>
+            <a class="link-btn" href="https://chatgpt.com/codex" target="_blank" rel="noopener">Codex 다운로드 <small>chatgpt.com/codex</small></a>
+            <div class="note info" style="margin-top:12px"><b>학교 PC라면</b>설치에 관리자 권한이 필요할 수 있습니다.</div>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>Codex 앱을 설치하고 실행했다</span></label></div>
+          </div>
+        </div>
+
+        <div class="inst">
+          <img src="assets/robot.png" alt="" width="495" height="582">
+          <div>
+            <span class="badge">STEP 4</span>
+            <h3>Codex 앱에 로그인하기</h3>
+            <div class="flow"><span>Codex 앱 실행</span><span>Sign in with ChatGPT</span><span>브라우저에서 계정 선택·허용</span><span>앱으로 돌아오면 완료</span></div>
+            <div class="grid2" style="margin-top:12px">
+              <div class="note"><b>로그인이 계속 실패하면</b>구독 등급을 확인하고, 앱을 완전히 종료한 뒤 다시 실행합니다.</div>
+              <div class="note info"><b>공용 PC라면</b>연수가 끝나면 앱 왼쪽 아래 계정 메뉴에서 로그아웃합니다.</div>
+            </div>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>Codex 앱에 로그인했다</span></label></div>
+          </div>
+        </div>
+
+        <div class="inst">
+          <img src="assets/folder.png" alt="" width="884" height="844">
+          <div>
+            <span class="badge">STEP 5</span>
+            <h3>실습 폴더 만들기</h3>
+            <p>Codex는 열어 준 폴더 안에서 작업합니다. 실습마다 폴더를 나누면 결과물이 섞이지 않습니다. 한글이나 띄어쓰기가 들어간 경로는 오류가 날 수 있으니 <b>영문 경로</b>를 씁니다.</p>
+            <p style="margin-top:8px;font-size:var(--fs-small)">파일 탐색기 → 로컬 디스크(C:) → 빈 곳 우클릭 → 새로 만들기 → 폴더</p>
+<pre class="tree" style="margin-top:10px">C:\codex-lab
+ ├─ 01-timer     실습 1 타이머
+ ├─ 02-picker    실습 2 발표자·모둠
+ ├─ 03-quiz      실습 3 퀴즈
+ ├─ 04-survey    실습 4 설문 분석
+ ├─ 05-files     실습 5 파일 정리
+ └─ 06-mine      나만의 프로그램</pre>
+            <div class="note warn" style="margin-top:12px"><b>실습 5 전용 연습 폴더</b>바탕화면에 <b>Codex연습</b> 폴더를 따로 만들어 둡니다. 파일 이름 변경 실습은 반드시 이 연습 폴더에서만 합니다.</div>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>C:\codex-lab 아래 실습 폴더 6개를 만들었다</span></label></div>
+          </div>
+        </div>
+
+        <div class="inst optional">
+          <img src="assets/bulb.png" alt="" width="386" height="470">
+          <div>
+            <span class="badge">STEP 6 · 선택</span>
+            <h3>추가로 설치하면 좋은 것</h3>
+            <div class="grid2" style="margin-top:6px">
+              <div class="tile">
+                <h4>Node.js (LTS)</h4>
+                <p>터미널에서 Codex CLI를 npm으로 설치·업데이트할 때 필요합니다. Windows Installer(.msi)를 받아 기본값으로 설치합니다.</p>
+                <a class="link-btn" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js <small>nodejs.org</small></a>
+              </div>
+              <div class="tile">
+                <h4>Python</h4>
+                <p>실습 5를 Python 창 프로그램으로 만들 때 필요합니다. 설치 첫 화면에서 <b>Add python.exe to PATH</b>를 꼭 체크합니다.</p>
+                <a class="link-btn" href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python <small>python.org</small></a>
+              </div>
+            </div>
+            <p style="margin-top:12px;font-size:var(--fs-small)">설치 확인: 시작 메뉴에서 <b>PowerShell</b>을 열고 아래 명령을 한 줄씩 입력합니다. 버전 숫자가 나오면 성공입니다.</p>
+            <div class="prompt code" style="margin-top:8px">
+              <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">PowerShell</span><button class="copy" type="button">복사</button></div>
+<pre>codex --version
+node -v
+python --version</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 앱 화면 ===================== -->
+    <section id="app" aria-labelledby="h-app">
+      <span class="eyebrow">PART 0 · 준비</span>
+      <h2 id="h-app">Codex 앱 화면과 승인 모드</h2>
+      <p class="lead">앱은 자주 업데이트되어 버튼 이름이 조금씩 바뀔 수 있습니다. 강사 화면을 기준으로 따라오세요.</p>
+      <div class="stack">
+        <div class="grid2">
+          <div class="tile"><span class="k">① 프로젝트 · 스레드</span><p>왼쪽 <b>[+ / Open project]</b>로 폴더를 엽니다. 작업 하나에 스레드 하나를 씁니다.</p></div>
+          <div class="tile"><span class="k">② 대화창</span><p>Codex가 지금 무엇을 하고 있는지 실시간으로 보여 줍니다.</p></div>
+          <div class="tile"><span class="k">③ 입력창</span><p>요청을 입력합니다. 아래에서 모델과 생각 깊이를 고릅니다.</p></div>
+          <div class="tile"><span class="k">④ 승인 카드</span><p>파일 수정이나 명령 실행 전에 허락을 구합니다. 읽고 누르세요.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-title"><span class="badge">시작 순서</span><h3>실습 폴더를 열고 새 스레드 시작</h3></div>
+          <ol>
+            <li>왼쪽 <b>[+ / Open project]</b> → <code>C:\codex-lab\01-timer</code> 선택</li>
+            <li>처음 여는 폴더는 신뢰 여부를 묻습니다. 실습 폴더이므로 <b>Trust</b>를 누릅니다.</li>
+            <li>새 스레드에서 요청합니다. 실습 하나에 스레드 하나, 주제가 바뀌면 새 스레드를 엽니다.</li>
+          </ol>
+        </div>
+        <div class="grid2">
+          <div class="note info"><b>승인 모드 원칙</b>처음에는 기본값인 <b>묻기(Ask)</b> 모드를 유지합니다. <b>Full access(전체 접근)</b>는 오늘 쓰지 않습니다.</div>
+          <div class="note"><b>승인 카드가 자주 뜨나요?</b>정상입니다. 모르면 "이 명령이 뭘 하는지 설명해줘"라고 물어보세요.</div>
+        </div>
+        <div class="step">
+          <div class="step-title"><span class="badge">팁</span><h3>AGENTS.md로 기본 규칙 알려 주기</h3></div>
+          <p>폴더에 AGENTS.md 파일을 두면 Codex가 대화를 시작할 때 먼저 읽습니다. 매번 같은 조건을 반복하지 않아도 됩니다. 시간이 부족하면 건너뛰어도 됩니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>C:\codex-lab 폴더에 AGENTS.md 파일을 만들고 아래 내용을 넣어줘.
+
+- 사용자는 코딩을 모르는 초등학교 교사다.
+- 화면의 모든 글자는 한국어로, 글씨는 크고 버튼은 단순하게 만든다.
+- 가능하면 별도 설치 없이 HTML 파일 하나로 실행되게 만든다.
+- 이 폴더 밖의 파일은 만들거나 고치지 않는다.
+- 파일을 삭제하거나 덮어쓰기 전에는 무엇을 할지 먼저 설명하고 허락을 받는다.
+- 학생 개인정보는 사용하지 않고 가상 데이터만 쓴다.
+- 작업이 끝나면 바뀐 파일 목록과 확인 방법을 3줄로 알려준다.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Codex 이해 ===================== -->
+    <section id="basics" aria-labelledby="h-basics">
+      <span class="eyebrow">Ⅰ · Ⅱ</span>
+      <h2 id="h-basics">Codex에게 일을 시키는 법</h2>
+      <div class="stack">
+        <div class="vs">
+          <div class="tile">
+            <h4>일반적인 ChatGPT</h4>
+            <p>"수업시간에 사용할 타이머 프로그램을 만들어줘."라고 하면 프로그램 코드를 <b>설명</b>해 주는 경우가 많습니다. 복사, 저장, 실행은 내가 직접 해야 합니다.</p>
+          </div>
+          <div class="tile codex">
+            <h4>Codex</h4>
+            <p>같은 요청을 하면 한 단계 더 나아갑니다.</p>
+            <div class="flow"><span>파일로 만들기</span><span>실행</span><span>문제 수정</span><span>기능 추가</span></div>
+          </div>
+        </div>
+        <div class="key">
+          <p>Codex를 처음 쓸 때 가장 중요한 능력은 코딩 능력이 아니라</p>
+          <strong>“내가 원하는 것을 구체적으로 설명하는 능력”</strong>
+        </div>
+        <h3 style="margin-top:8px">좋은 요청에 들어가는 4가지</h3>
+        <div class="grid2">
+          <div class="tile"><span class="k">① 무엇을 만들 것인가?</span><p>수업용 타이머</p></div>
+          <div class="tile"><span class="k">② 누가 사용할 것인가?</span><p>초등학교 교사와 학생</p></div>
+          <div class="tile"><span class="k">③ 어떤 기능이 필요한가?</span><p>5분·10분·15분 버튼, 시작·정지·초기화</p></div>
+          <div class="tile"><span class="k">④ 어떤 모습이면 좋은가?</span><p>교실 프로젝터에서 보기 좋도록 글자를 크게</p></div>
+        </div>
+        <div class="prompt">
+          <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">좋은 요청 예시</span><button class="copy" type="button">복사</button></div>
+<pre>초등학교 교실에서 사용할 수업용 타이머를 만들어줘.
+5분, 10분, 15분 버튼이 있고 시작, 일시정지, 초기화 기능이 필요해.
+프로젝터 화면에서도 잘 보이도록 숫자를 아주 크게 표시해줘.
+처음 사용하는 교사도 쉽게 사용할 수 있도록 단순하게 만들어줘.
+별도의 설치 없이 실행할 수 있도록 만들어줘.</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 1 ===================== -->
+    <section id="p1" data-practice aria-labelledby="h-p1">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 1</span>
+          <h2 id="h-p1">수업용 타이머 만들기</h2>
+          <div class="meta"><span>난이도 <span class="stars">★☆☆☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\01-timer</b></span><span>20분</span></div>
+          <div class="goal"><b>실습 목표</b> Codex에게 처음으로 프로그램을 만들게 하고, <b>요청 → 실행 → 수정</b>의 기본 과정을 경험합니다.</div>
+        </div>
+        <img src="assets/timer.png" alt="" width="436" height="570">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>기본 프로그램 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>초등학교 교실에서 사용할 수업용 타이머 프로그램을 만들어줘.
+
+조건은 다음과 같아.
+
+- 5분 / 10분 / 15분 버튼
+- 시작 버튼
+- 일시정지 버튼
+- 초기화 버튼
+- 남은 시간을 화면 가운데 매우 크게 표시
+- 시간이 1분 이하로 남으면 눈에 잘 띄도록 표시
+- 시간이 끝나면 화면에 "시간 종료!" 표시
+- 교실 프로젝터로 보여주기 좋은 디자인
+- 별도의 설치 없이 사용할 수 있도록 HTML, CSS, JavaScript로 만들어줘.
+
+파일을 만든 다음 직접 실행해서 오류가 없는지도 확인해줘.</pre>
+          </div>
+          <div class="note info"><b>승인 카드가 뜨면</b>내용을 읽고 승인합니다. 완성까지 1~3분 정도 걸립니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>실행해 보기</h3></div>
+          <div class="grid2">
+            <div class="tile"><span class="k">방법 1 · 파일 탐색기</span><p><code>C:\codex-lab\01-timer\index.html</code>을 더블클릭합니다.</p></div>
+            <div class="tile"><span class="k">방법 2 · Codex에게 부탁</span><p>"만든 프로그램을 브라우저로 열어줘."</p></div>
+          </div>
+          <div class="checks">
+            <div class="checks-title">확인해 볼 것</div>
+            <label class="check"><input type="checkbox"><span>5분 버튼이 작동하는가?</span></label>
+            <label class="check"><input type="checkbox"><span>시작 버튼이 작동하는가?</span></label>
+            <label class="check"><input type="checkbox"><span>일시정지가 되는가?</span></label>
+            <label class="check"><input type="checkbox"><span>초기화가 되는가?</span></label>
+            <label class="check"><input type="checkbox"><span>시간이 지나면서 숫자가 줄어드는가?</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>수정 요청하기</h3></div>
+          <p>이번에는 새로운 기능을 추가합니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>프로그램은 잘 작동해.
+
+그런데 교실에서 사용하기에는 조금 심심해.
+
+다음 기능을 추가해줘.
+
+- 전체화면 버튼
+- 1분 남았을 때 화면 분위기가 바뀌도록 하기
+- 종료되면 간단한 알림음 재생
+- 1분 / 3분 버튼 추가
+
+기존 기능은 그대로 유지해줘.</pre>
+          </div>
+          <div class="note"><b>마법의 한 문장: "기존 기능은 그대로 유지해줘."</b>새 기능을 넣다가 잘 되던 기능이 바뀌는 것을 막아 줍니다. 수정이 끝나면 브라우저에서 새로고침(F5)하고 새 기능을 하나씩 눌러 봅니다.</div>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>전체화면 버튼이 작동한다</span></label>
+            <label class="check"><input type="checkbox"><span>1분 남았을 때 화면이 바뀐다</span></label>
+            <label class="check"><input type="checkbox"><span>끝나면 알림음이 난다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">기억하기</span><h3>처음부터 완벽한 프롬프트는 필요 없습니다</h3></div>
+          <div class="cycle"><div>만들기</div><div>실행</div><div>수정</div><div>다시 실행</div></div>
+          <p>Codex는 이 과정을 반복하며 대화로 고쳐 가는 방식이 훨씬 효과적입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 2 ===================== -->
+    <section id="p2" data-practice aria-labelledby="h-p2">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 2</span>
+          <h2 id="h-p2">발표자 추첨 및 모둠 편성기</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★☆☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\02-picker</b></span><span>20분</span></div>
+          <div class="goal"><b>실습 목표</b> 데이터를 입력하고 처리하는 프로그램을 만들고, 기능을 <b>한 단계씩</b> 추가해 봅니다.</div>
+        </div>
+        <img src="assets/lottery.png" alt="" width="538" height="545">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="grid3">
+          <div class="tile"><h4>발표자 랜덤 추첨</h4><p>버튼 한 번으로 한 명을 무작위 선택</p></div>
+          <div class="tile"><h4>모둠 자동 편성</h4><p>2명·3명·4명 단위로 랜덤 모둠</p></div>
+          <div class="tile"><h4>발표한 학생 제외</h4><p>이미 발표한 학생은 다시 뽑히지 않게</p></div>
+        </div>
+        <div class="note warn"><b>개인정보 원칙</b>실제 학생 이름 대신 아래의 가상 학생 이름을 사용합니다.</div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>프로그램 제작</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>교사가 수업시간에 사용할 수 있는 학생 발표자 추첨 프로그램을 만들어줘.
+
+다음 기능이 필요해.
+
+1. 학생 이름을 여러 명 입력할 수 있다.
+2. '발표자 뽑기' 버튼을 누르면 학생 한 명을 무작위로 선택한다.
+3. 뽑힌 학생은 크게 표시한다.
+4. 이미 발표한 학생은 다시 나오지 않는 옵션이 있다.
+5. '초기화' 버튼을 누르면 모든 학생이 다시 추첨 대상이 된다.
+6. '모둠 만들기' 기능을 추가해서 2명, 3명, 4명 단위로 랜덤 모둠을 만들 수 있다.
+
+초등학교 교사가 사용하기 쉽도록 버튼을 크고 단순하게 만들어줘.
+
+HTML 파일 하나만 실행하면 사용할 수 있도록 만들어줘.</pre>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>테스트용 학생 입력</h3></div>
+          <p>아래 가상 학생 12명을 복사해 프로그램 입력칸에 붙여 넣고, 발표자를 몇 번 뽑아 봅니다.</p>
+          <div class="names" aria-hidden="true"><span>김하늘</span><span>박바다</span><span>이우리</span><span>최사랑</span><span>정미소</span><span>한누리</span><span>강새봄</span><span>윤도담</span><span>조라온</span><span>송가람</span><span>임다온</span><span>오한별</span></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">가상 학생 명단 (한 줄에 한 명)</span><button class="copy" type="button">복사</button></div>
+<pre>김하늘
+박바다
+이우리
+최사랑
+정미소
+한누리
+강새봄
+윤도담
+조라온
+송가람
+임다온
+오한별</pre>
+          </div>
+          <div class="checks">
+            <div class="checks-title">확인해 볼 것</div>
+            <label class="check"><input type="checkbox"><span>발표자가 무작위로 뽑힌다</span></label>
+            <label class="check"><input type="checkbox"><span>'이미 발표한 학생 제외'를 켜면 같은 학생이 다시 나오지 않는다</span></label>
+            <label class="check"><input type="checkbox"><span>모둠 만들기에서 2·3·4명 모둠이 잘 나뉜다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>프로그램 개선 · 추첨 애니메이션</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>발표자를 뽑을 때 바로 이름이 나타나는 것보다 긴장감이 있었으면 좋겠어.
+
+약 2초 동안 여러 이름이 빠르게 바뀌다가 최종 발표자가 나타나는 추첨 애니메이션을 만들어줘.
+
+그리고 지금까지 발표한 학생을 화면 아래쪽에 표시해줘.</pre>
+          </div>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>이름이 약 2초간 바뀌다가 멈춘다</span></label>
+            <label class="check"><input type="checkbox"><span>발표한 학생 목록이 화면 아래에 쌓인다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 4</span><h3>다시 개선하기 · 모둠 카드와 인쇄</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>모둠을 만들었을 때 각 모둠을 카드 형태로 보여줘.
+
+모둠 이름은 자동으로
+
+1모둠
+2모둠
+3모둠
+
+처럼 표시해줘.
+
+결과를 인쇄할 수 있는 버튼도 추가해줘.</pre>
+          </div>
+          <div class="note info"><b>인쇄 확인</b>인쇄 창이 열리면 성공입니다. 실제로 인쇄하지 않고 'PDF로 저장'으로 확인해도 됩니다.</div>
+          <div class="note"><b>이번 실습의 포인트</b>기능을 한꺼번에 요구하지 않고, 단계적으로 추가했습니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 3 ===================== -->
+    <section id="p3" data-practice aria-labelledby="h-p3">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 3</span>
+          <h2 id="h-p3">수업용 퀴즈 게임 만들기</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★☆☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\03-quiz</b></span><span>20분</span></div>
+          <div class="goal"><b>실습 목표</b> 학생들이 직접 참여하는 간단한 수업용 콘텐츠를 만듭니다.</div>
+        </div>
+        <img src="assets/quiz.png" alt="" width="813" height="736">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="quiz" id="demoQuiz">
+          <div class="checks-title" style="margin-bottom:6px">완성 모습 미리 보기 · 직접 눌러 보세요</div>
+          <div class="q">신라가 삼국을 통일하는 과정에서 당나라와 연합하여 먼저 멸망시킨 나라는?</div>
+          <div class="opts">
+            <button type="button">① 고구려</button>
+            <button type="button" data-right>② 백제</button>
+            <button type="button">③ 발해</button>
+            <button type="button">④ 가야</button>
+          </div>
+          <div class="msg" aria-live="polite"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>퀴즈 제작</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>초등학교 수업에서 사용할 객관식 퀴즈 프로그램을 만들어줘.
+
+다음 조건으로 만들어줘.
+
+- 문제는 한 번에 하나씩 보여준다.
+- 보기 4개를 버튼으로 표시한다.
+- 학생이 답을 클릭하면 정답 여부를 즉시 알려준다.
+- 정답이면 간단한 축하 효과를 보여준다.
+- 다음 문제 버튼이 있다.
+- 마지막에는 맞힌 문제 수를 표시한다.
+
+샘플 문제는 초등학교 5학년 수준의 사회 문제 5개를 넣어줘.
+
+프로젝터에서 보기 좋게 글자를 크게 만들어줘.
+
+HTML 파일로 실행할 수 있도록 만들어줘.</pre>
+          </div>
+          <div class="note warn"><b>정답 확인은 꼭 직접</b>AI가 만든 문제는 내용이나 정답이 틀릴 수 있습니다. 5문제의 정답이 맞는지 확인하세요.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>문제 수정하기</h3></div>
+          <p>프로그램의 문제 부분을 직접 찾아 고쳐 보거나 Codex에게 요청합니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>현재 문제 중 3번 문제를 삭제하고 다음 문제로 교체해줘.
+
+"발해를 세운 사람은 누구인가?"
+
+① 장보고
+② 대조영
+③ 김유신
+④ 왕건
+
+정답은 ②번이야.</pre>
+          </div>
+          <div class="note info"><b>직접 고쳐 보기 (도전)</b>index.html 우클릭 → 연결 프로그램 → 메모장 → <code>Ctrl + F</code>로 문제 문장 검색 → 따옴표 안의 글자만 바꾸고 저장 → 브라우저 새로고침(F5). 따옴표와 쉼표는 지우지 않도록 주의하세요.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>게임 요소 추가</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>퀴즈를 조금 더 게임처럼 만들어줘.
+
+다음 기능을 추가해줘.
+
+- 문제당 제한시간 20초
+- 남은 시간 표시
+- 연속으로 정답을 맞히면 콤보 표시
+- 마지막에 100점 만점으로 점수 표시
+
+기존 기능은 유지해줘.</pre>
+          </div>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>20초 제한시간과 남은 시간이 보인다</span></label>
+            <label class="check"><input type="checkbox"><span>연속 정답이면 콤보가 표시된다</span></label>
+            <label class="check"><input type="checkbox"><span>마지막에 100점 만점 점수가 나온다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">더 해 보기</span><h3>새로 만들 필요가 있을까요?</h3></div>
+          <p>아닙니다. 조금만 바꾸면 국어 단어 퀴즈, 영어 단어 퀴즈, 수학 연산 게임, 역사 퀴즈, 과학 개념 확인, 창의적 체험활동 퀴즈로 쓸 수 있습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이 프로그램을 영어 단어 학습용으로 바꿔줘.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 4 ===================== -->
+    <section id="p4" data-practice aria-labelledby="h-p4">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 4</span>
+          <h2 id="h-p4">CSV 설문 결과 자동 분석 프로그램</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★★☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\04-survey</b></span><span>20분</span></div>
+          <div class="goal"><b>실습 목표</b> Codex를 <b>교사 업무 자동화 도구</b>로 활용하는 경험을 합니다.</div>
+        </div>
+        <img src="assets/chart.png" alt="" width="494" height="511">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <p>학생 30명에게 수업 만족도 설문을 했다고 가정합니다. 각 항목은 1~5점입니다.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>이름</th><th class="num">재미있었다</th><th class="num">이해가잘됐다</th><th class="num">다시하고싶다</th></tr></thead>
+            <tbody>
+              <tr><td>학생01</td><td class="num">5</td><td class="num">2</td><td class="num">4</td></tr>
+              <tr><td>학생02</td><td class="num">4</td><td class="num">2</td><td class="num">5</td></tr>
+              <tr><td>학생03</td><td class="num">4</td><td class="num">2</td><td class="num">4</td></tr>
+              <tr><td>…</td><td class="num">…</td><td class="num">…</td><td class="num">…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note warn"><b>반드시 가상 데이터</b>실제 학생 설문이 아닌 가상 데이터를 사용합니다.</div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">준비</span><h3>가상 설문 데이터 만들기</h3></div>
+          <p>둘 중 편한 방법을 고르세요.</p>
+          <div class="grid2">
+            <div class="tile"><span class="k">방법 A · Codex에게 만들게 하기</span><p>아래 첫 번째 프롬프트를 붙여 넣습니다.</p></div>
+            <div class="tile"><span class="k">방법 B · 직접 붙여 넣기</span><p>두 번째 데이터를 복사해 메모장에 붙여 넣고 <code>survey.csv</code>로 저장합니다. 인코딩은 UTF-8로 합니다.</p></div>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">방법 A · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>실습용 가상 설문 데이터 파일 survey.csv를 만들어줘.
+- 열: 이름, 재미있었다, 이해가잘됐다, 다시하고싶다
+- 이름은 학생01 ~ 학생30
+- 각 점수는 1~5점 사이
+- '이해가잘됐다' 문항은 평균이 3점보다 조금 낮게 나오도록 만들어줘.
+- 엑셀에서 한글이 깨지지 않도록 UTF-8(BOM)으로 저장해줘.</pre>
+          </div>
+          <div class="prompt code">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">방법 B · survey.csv 내용 (30명)</span><button class="copy" type="button">복사</button></div>
+<pre>이름,재미있었다,이해가잘됐다,다시하고싶다
+학생01,5,2,4
+학생02,4,2,5
+학생03,4,2,4
+학생04,5,3,4
+학생05,5,3,3
+학생06,4,3,4
+학생07,3,2,4
+학생08,5,2,5
+학생09,4,3,4
+학생10,5,2,4
+학생11,4,4,3
+학생12,4,2,4
+학생13,4,3,4
+학생14,5,2,3
+학생15,5,3,5
+학생16,5,2,5
+학생17,4,3,3
+학생18,4,3,4
+학생19,5,2,4
+학생20,4,4,4
+학생21,4,3,4
+학생22,4,2,4
+학생23,5,3,4
+학생24,5,3,4
+학생25,4,4,4
+학생26,4,3,3
+학생27,4,4,4
+학생28,5,2,3
+학생29,5,2,5
+학생30,5,2,4</pre>
+          </div>
+          <div class="note"><b>정답 미리 보기</b>방법 B 데이터의 평균은 재미있었다 4.43, 이해가잘됐다 2.67, 다시하고싶다 3.97, 전체 3.69입니다. 프로그램의 숫자가 이와 같은지 비교해 보세요.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>분석 프로그램 제작</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>교사가 설문조사 결과를 분석할 수 있는 프로그램을 만들어줘.
+
+CSV 파일을 프로그램에 넣으면 자동으로 분석하도록 해줘.
+
+CSV에는
+
+이름, 재미있었다, 이해가잘됐다, 다시하고싶다
+
+열이 들어 있어.
+
+프로그램에서는 다음을 보여줘.
+
+1. 응답 학생 수
+2. 각 문항 평균
+3. 전체 평균
+4. 문항별 막대그래프
+5. 가장 높은 점수를 받은 문항
+6. 가장 낮은 점수를 받은 문항
+
+교사가 쉽게 이해할 수 있도록 대시보드 형태로 만들어줘.
+
+CSV 파일은 브라우저에서만 처리하고 외부 서버로 전송하지 않도록 만들어줘.
+
+HTML 파일로 실행할 수 있도록 해줘.</pre>
+          </div>
+          <div class="note info"><b>개인정보 보호 문장</b>"외부 서버로 전송하지 않도록"은 실제 업무에 응용할 때도 꼭 넣으세요.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>데이터 불러오기</h3></div>
+          <p>만든 HTML을 실행하고 <code>survey.csv</code>를 선택하거나 끌어다 놓습니다.</p>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>응답자 수가 30명으로 나온다</span></label>
+            <label class="check"><input type="checkbox"><span>문항별 평균과 전체 평균이 나온다</span></label>
+            <label class="check"><input type="checkbox"><span>문항별 막대그래프가 보인다</span></label>
+            <label class="check"><input type="checkbox"><span>최고 문항과 최저 문항이 표시된다</span></label>
+          </div>
+          <div class="note"><b>숫자가 이상하면</b>"평균이 이상하게 나와. 원인을 찾아서 고쳐줘."라고 요청합니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>프로그램 개선하기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>분석 결과에 다음 기능을 추가해줘.
+
+- 평균 4.0 이상 문항을 별도로 표시
+- 평균 3.0 미만 문항을 개선 필요 항목으로 표시
+- 결과를 인쇄할 수 있는 버튼
+- 모든 그래프를 보기 좋게 정리
+
+기존 기능은 유지해줘.</pre>
+          </div>
+          <div class="grid2">
+            <div class="note ok"><b>우수 문항 (4.0 이상)</b>재미있었다</div>
+            <div class="note warn"><b>개선 필요 (3.0 미만)</b>이해가잘됐다</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">생각해 보기</span><h3>비슷한 방법으로 무엇을 만들 수 있을까요?</h3></div>
+          <div class="flow"><span>수업 만족도</span><span>학생 자기평가</span><span>학부모 설문</span><span>교육과정 설문</span><span>행사 만족도</span><span>학급 투표</span></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">재활용 예시</span><button class="copy" type="button">복사</button></div>
+<pre>이 분석 프로그램을 학부모 만족도 설문(열: 문항1~문항5)에 맞게 바꿔줘.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 5 ===================== -->
+    <section id="p5" data-practice aria-labelledby="h-p5">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 5</span>
+          <h2 id="h-p5">학교 파일 자동 정리 프로그램</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★★★☆</span></span><span>작업 폴더 <b>C:\codex-lab\05-files</b></span><span>테스트 폴더 <b>바탕화면\Codex연습</b></span><span>15분</span></div>
+          <div class="goal"><b>실습 목표</b> Codex가 컴퓨터의 실제 작업도 자동화할 수 있다는 것을 경험합니다.</div>
+        </div>
+        <img src="assets/files.png" alt="" width="507" height="453">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <p>현장체험학습 사진의 이름을 한꺼번에 바꾸고 싶습니다. 파일이 100개라면 일일이 바꾸기 어렵습니다.</p>
+        <div class="rename">
+          <div class="col">IMG_1023.jpg<br>IMG_1024.jpg<br>IMG_1025.jpg<br>IMG_1026.jpg</div>
+          <div class="arrow" aria-hidden="true">➜</div>
+          <div class="col after">현장체험학습_001.jpg<br>현장체험학습_002.jpg<br>현장체험학습_003.jpg<br>현장체험학습_004.jpg</div>
+        </div>
+
+        <div class="note warn"><b>매우 중요한 안전 규칙</b>첫 실습에서는 절대로 실제 업무 폴더를 사용하지 않습니다. 바탕화면의 <b>Codex연습</b> 폴더에 테스트용 파일을 넣어 실습합니다.</div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">준비</span><h3>연습용 파일 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>바탕화면에 'Codex연습' 폴더를 만들고, 그 안에 실습용 빈 파일을 만들어줘.
+- IMG_1023.jpg ~ IMG_1032.jpg (10개)
+- 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx, 스크린샷.png
+내용은 비어 있어도 괜찮아. 다른 폴더는 건드리지 마.</pre>
+          </div>
+          <div class="note info"><b>승인 카드가 뜹니다</b>작업 폴더 밖(바탕화면)에 파일을 만들기 때문입니다. 내용을 읽고 승인하세요.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>프로그램 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>Windows에서 사용할 수 있는 파일 이름 일괄 변경 프로그램을 만들어줘.
+
+프로그래밍을 모르는 교사가 사용하는 프로그램이야.
+
+다음 기능이 필요해.
+
+1. 폴더 선택 버튼
+2. 변경할 파일 이름 앞부분 입력
+3. 번호 시작값 입력
+4. 실행 전에 변경 결과 미리보기
+5. 파일 이름 변경 버튼
+6. 실수했을 경우 이전 이름으로 되돌리는 기능
+
+예를 들어
+
+IMG_1023.jpg
+
+를
+
+현장체험학습_001.jpg
+
+처럼 바꿀 수 있도록 만들어줘.
+
+실제 파일을 변경하기 전에 반드시 사용자에게 확인을 받도록 만들어줘.
+
+초보자가 사용하기 쉬운 화면으로 만들어줘.</pre>
+          </div>
+          <div class="note info"><b>결과물 형태</b>HTML이 아니라 Python 창 프로그램이나 PowerShell 스크립트로 만들어질 수 있습니다. Codex가 알려 주는 실행 방법을 따르세요. Python이 없다면 "Python 없이 실행되는 방식으로 만들어줘"라고 요청합니다.</div>
+          <div class="checks">
+            <div class="checks-title">이 순서로 확인하세요</div>
+            <label class="check"><input type="checkbox"><span>프로그램을 실행했다 (모르면 "실행 방법을 알려줘")</span></label>
+            <label class="check"><input type="checkbox"><span>폴더는 <b>바탕화면\Codex연습</b>만 선택했다</span></label>
+            <label class="check"><input type="checkbox"><span>앞부분 "현장체험학습", 시작 번호 1을 입력했다</span></label>
+            <label class="check"><input type="checkbox"><span>미리보기에서 IMG_1023.jpg → 현장체험학습_001.jpg를 확인했다</span></label>
+            <label class="check"><input type="checkbox"><span>확인 창에서 [예]를 눌러 실제로 이름이 바뀌었다</span></label>
+            <label class="check"><input type="checkbox"><span>[되돌리기]로 원래 이름이 복구되었다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>개선하기 · 확장자별 자동 분류</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>파일 이름뿐만 아니라 확장자별로 파일을 분류하는 기능도 추가해줘.
+
+예를 들어
+
+jpg, png → 사진
+pdf → PDF
+docx, hwp → 문서
+pptx → 프레젠테이션
+
+폴더로 자동 정리할 수 있도록 해줘.
+
+단, 실제 이동을 하기 전에 어떤 파일이 어디로 이동할지 미리 보여줘.</pre>
+          </div>
+          <div class="grid2">
+            <div class="tile"><span class="k">사진</span><p>현장체험학습_001.jpg …, 스크린샷.png</p></div>
+            <div class="tile"><span class="k">PDF</span><p>가정통신문.pdf</p></div>
+            <div class="tile"><span class="k">문서</span><p>회의록.docx, 계획서.hwp</p></div>
+            <div class="tile"><span class="k">프레젠테이션</span><p>발표자료.pptx</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 마무리 미션 ===================== -->
+    <section id="mission" data-practice aria-labelledby="h-mission">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">마무리 미션</span>
+          <h2 id="h-mission">나만의 프로그램 만들기</h2>
+          <div class="meta"><span>작업 폴더 <b>C:\codex-lab\06-mine</b></span><span>10분</span></div>
+          <div class="goal">아래에서 하나를 고르거나, 평소 <b>"이거 매번 하기 귀찮은데?"</b> 했던 업무 하나를 고릅니다.</div>
+        </div>
+        <img src="assets/rocket.png" alt="" width="421" height="592">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="flow"><span>자리 배치</span><span>청소당번 추첨</span><span>급식 만족도 조사</span><span>수업 타이머</span><span>발표 순서 추첨</span><span>모둠 편성</span><span>받아쓰기 연습</span><span>구구단 게임</span><span>영어 단어 퀴즈</span><span>사진 파일 정리</span><span>설문 결과 분석</span></div>
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>먼저 기능을 제안받기</h3></div>
+          <p>○○ 부분을 내 상황에 맞게 바꿔서 보냅니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>나는 초등학교 교사야.
+
+○○ 업무를 자주 하는데 이 과정에서 ○○하는 것이 번거로워.
+
+이 일을 쉽게 할 수 있는 프로그램을 만들고 싶어.
+
+우선 프로그램을 만들기 전에 어떤 프로그램을 만들면 좋을지 기능을 제안해줘.</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>제안을 확인한 다음 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>좋아. 그 기능으로 프로그램을 만들어줘.</pre>
+          </div>
+          <p style="font-size:var(--fs-small)">마음에 드는 기능만 고르고 싶다면 "1, 3, 4번 기능으로 만들어줘"처럼 요청해도 됩니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 정리 ===================== -->
+    <section aria-labelledby="h-levels">
+      <span class="eyebrow">Ⅲ · Ⅳ 정리</span>
+      <h2 id="h-levels">다섯 가지 실습 돌아보기</h2>
+      <div class="stack">
+        <div class="table-wrap">
+          <table class="levels">
+            <thead><tr><th>실습</th><th>핵심 경험</th><th>난이도</th></tr></thead>
+            <tbody>
+              <tr><td>1 · 수업용 타이머</td><td>프로그램 처음 만들기</td><td class="stars">★☆☆☆☆</td></tr>
+              <tr><td>2 · 발표자·모둠 편성기</td><td>데이터와 기능 추가</td><td class="stars">★★☆☆☆</td></tr>
+              <tr><td>3 · 수업용 퀴즈</td><td>기존 프로그램 확장</td><td class="stars">★★☆☆☆</td></tr>
+              <tr><td>4 · 설문 분석 대시보드</td><td>데이터 분석 자동화</td><td class="stars">★★★☆☆</td></tr>
+              <tr><td>5 · 파일 자동 정리</td><td>실제 업무 자동화</td><td class="stars">★★★★☆</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="vs">
+          <div class="note warn"><b>나쁜 방법</b>"완벽한 수업 프로그램 만들어줘."</div>
+          <div class="note ok"><b>좋은 방법 · 대화로 키워 가기</b>"우선 기본적인 타이머를 만들어줘." → "잘 작동하네. 전체화면 기능을 추가해줘." → "1분 이하일 때 표시가 바뀌도록 해줘." → "종료음도 넣어줘."</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="phrases" aria-labelledby="h-phrases">
+      <span class="eyebrow">Ⅴ. 수정 요청 표현</span>
+      <h2 id="h-phrases">Codex에게 수정 요청하는 6가지 표현</h2>
+      <p class="lead">어떤 프로그램에도 그대로 쓸 수 있습니다. ○○ 부분만 바꾸세요.</p>
+      <div class="stack">
+        <div class="prompt"><div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">① 기능 추가</span><button class="copy" type="button">복사</button></div><pre>기존 기능은 유지하고 ○○ 기능을 추가해줘.</pre></div>
+        <div class="prompt"><div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">② 오류 수정</span><button class="copy" type="button">복사</button></div><pre>○○ 버튼을 눌렀는데 작동하지 않아. 원인을 찾아서 수정해줘.</pre></div>
+        <div class="prompt"><div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">③ 디자인 수정</span><button class="copy" type="button">복사</button></div><pre>기능은 좋은데 화면이 복잡해. 초등학교 교사가 사용하기 쉽게 다시 디자인해줘.</pre></div>
+        <div class="prompt"><div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">④ 사용성 개선</span><button class="copy" type="button">복사</button></div><pre>사용자가 처음 보더라도 설명 없이 사용할 수 있도록 개선해줘.</pre></div>
+        <div class="prompt"><div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">⑤ 코드 점검</span><button class="copy" type="button">복사</button></div><pre>현재 프로그램 전체를 점검해서 오류가 발생할 가능성이 있는 부분을 찾아 수정해줘.</pre></div>
+        <div class="prompt"><div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">⑥ 프로그램 발전 · 제안만 받기</span><button class="copy" type="button">복사</button></div><pre>이 프로그램을 학교 현장에서 더 유용하게 사용할 수 있도록 추가하면 좋은 기능 5가지를 먼저 제안해줘. 아직 수정하지는 마.</pre></div>
+      </div>
+    </section>
+
+    <section id="review" aria-labelledby="h-review">
+      <span class="eyebrow">Ⅵ. 마무리 점검</span>
+      <h2 id="h-review">초보자가 꼭 기억해야 할 프롬프트</h2>
+      <p class="lead">프로그램이 어느 정도 완성되었다면 마지막에 꼭 이 프롬프트로 전체 점검을 요청하세요. 메모장에 저장해 두고 쓰면 편합니다.</p>
+      <div class="prompt">
+        <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">완성 전 전체 점검</span><button class="copy" type="button">복사</button></div>
+<pre>지금까지 만든 프로그램을 전체적으로 점검해줘.
+
+1. 실행 오류
+2. 버튼 동작 오류
+3. 예상하지 못한 입력
+4. 초보 사용자가 헷갈릴 부분
+5. 데이터가 사라질 가능성
+
+을 확인하고 문제가 있다면 수정해줘.
+
+수정 후 프로그램이 정상 작동하는지도 다시 확인해줘.</pre>
+      </div>
+    </section>
+
+    <section id="caution" aria-labelledby="h-caution">
+      <span class="eyebrow">Ⅶ. 주의사항</span>
+      <h2 id="h-caution">교원이 꼭 지켜야 할 세 가지</h2>
+      <div class="stack">
+        <div class="note warn"><b>개인정보</b>실제 학생 이름, 주민등록번호, 주소, 전화번호, 상담 기록, 건강 정보를 Codex에 넣지 않습니다. 연수에서는 반드시 가상 데이터를 사용합니다.</div>
+        <div class="note"><b>중요한 파일</b>파일을 수정하거나 이름을 바꾸는 프로그램은 실제 업무 폴더가 아닌 <b>연습용 복사본</b>에서 먼저 테스트합니다.</div>
+        <div class="note info"><b>AI 결과 검토</b>Codex가 만든 프로그램이 항상 완벽하지는 않습니다. AI에게 만들게 하는 능력보다 <b>결과를 확인하는 능력</b>이 더 중요합니다.</div>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="h-faq">
+      <span class="eyebrow">도움말</span>
+      <h2 id="h-faq">이럴 땐 이렇게</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>상황</th><th>해결 방법</th></tr></thead>
+          <tbody>
+            <tr><td>폴더가 안 열리거나 Trust 오류</td><td style="white-space:normal">경로에 한글·띄어쓰기가 없는지 확인합니다(C:\codex-lab 권장). 그다음 앱을 다시 시작합니다.</td></tr>
+            <tr><td>승인 카드가 너무 자주 떠요</td><td style="white-space:normal">정상입니다. 읽고 승인하는 편이 안전합니다.</td></tr>
+            <tr><td>'Reconnecting…' 반복 후 실패</td><td style="white-space:normal">여러 작업을 동시에 돌리지 말고 하나씩 합니다. 1분 쉬고 다시 시도합니다.</td></tr>
+            <tr><td>만든 파일이 어디 있는지 몰라요</td><td style="white-space:normal">"만든 파일 위치를 알려주고 탐색기로 열어줘."</td></tr>
+            <tr><td>버튼이 작동하지 않아요</td><td style="white-space:normal">"○○ 버튼을 눌렀는데 작동하지 않아. 원인을 찾아서 수정해줘."</td></tr>
+            <tr><td>엑셀에서 CSV 한글이 깨져요</td><td style="white-space:normal">"CSV를 UTF-8(BOM)으로 저장하도록 바꿔줘."</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="final">
+      <span class="eyebrow">Ⅹ. 가장 중요한 한 문장</span>
+      <blockquote>“코드를 직접 작성하는 것이 아니라, 원하는 결과를 설명하고 결과를 확인하면서 AI와 함께 프로그램을 완성한다.”</blockquote>
+      <p>Codex 시대에 필요한 것은 모든 교사가 프로그래머가 되는 것이 아닙니다. <strong>교사가 자신에게 필요한 도구를 스스로 만들어 사용할 수 있게 되는 것</strong>입니다.</p>
+    </div>
+    <p class="footer">2026 강릉교육지원청 생성형AI 연수 · 교원 대상 Codex 첫걸음 · 체크 표시는 이 브라우저에만 저장됩니다.</p>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status">복사했어요. Codex 입력창에 붙여 넣으세요.</div>
+
+<script>
+(function () {
+  const KEY = "codex-first-steps-checks";
+  const toast = document.getElementById("toast");
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+  }
+
+  // 복사 버튼
+  function fallbackCopy(pre) {
+    const range = document.createRange();
+    range.selectNodeContents(pre);
+    const sel = window.getSelection();
+    sel.removeAllRanges(); sel.addRange(range);
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    return ok;
+  }
+  document.querySelectorAll(".prompt").forEach((box) => {
+    const btn = box.querySelector(".copy");
+    const pre = box.querySelector("pre");
+    btn.addEventListener("click", () => {
+      const text = pre.innerText.replace(/\s+$/, "");
+      const done = () => {
+        btn.textContent = "복사됨 ✓"; btn.classList.add("done");
+        showToast("복사했어요. Codex 입력창에 붙여 넣으세요.");
+        setTimeout(() => { btn.textContent = "복사"; btn.classList.remove("done"); }, 1800);
+      };
+      const fail = () => {
+        if (fallbackCopy(pre)) done();
+        else showToast("자동 복사가 막혔어요. 선택된 글자를 Ctrl+C로 복사하세요.");
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fail);
+      } else fail();
+    });
+  });
+
+  // 체크리스트 (이 브라우저에만 저장)
+  const boxes = Array.from(document.querySelectorAll(".check input"));
+  boxes.forEach((b, i) => { b.id = "chk-" + i; });
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+  boxes.forEach((b) => { if (saved[b.id]) b.checked = true; });
+  const bar = document.getElementById("progBar");
+  const txt = document.getElementById("progTxt");
+  function sync() {
+    const n = boxes.filter((b) => b.checked).length;
+    bar.style.width = (boxes.length ? (n / boxes.length) * 100 : 0) + "%";
+    txt.textContent = "체크 " + n + " / " + boxes.length;
+    document.querySelectorAll("nav.toc a").forEach((a) => {
+      const sec = document.querySelector(a.getAttribute("href"));
+      if (!sec) return;
+      const inside = Array.from(sec.querySelectorAll(".check input"));
+      a.classList.toggle("done", inside.length > 0 && inside.every((b) => b.checked));
+    });
+  }
+  boxes.forEach((b) => b.addEventListener("change", () => {
+    const s = {}; boxes.forEach((x) => { if (x.checked) s[x.id] = 1; });
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
+    sync();
+  }));
+  sync();
+
+  // 목차: 현재 위치 표시 + 모바일 열고 닫기
+  const toc = document.getElementById("toc");
+  const menuBtn = document.getElementById("menuBtn");
+  menuBtn.addEventListener("click", () => {
+    const open = toc.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open);
+    menuBtn.textContent = open ? "닫기" : "목차";
+  });
+  toc.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => {
+    toc.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); menuBtn.textContent = "목차";
+  }));
+  const links = Array.from(toc.querySelectorAll("a"));
+  const targets = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+  function onScroll() {
+    let cur = targets[0];
+    for (const t of targets) if (t.getBoundingClientRect().top < 120) cur = t;
+    links.forEach((a) => a.classList.toggle("on", document.querySelector(a.getAttribute("href")) === cur));
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // 미리 보기 퀴즈
+  const quiz = document.getElementById("demoQuiz");
+  const msg = quiz.querySelector(".msg");
+  quiz.querySelectorAll(".opts button").forEach((btn) => btn.addEventListener("click", () => {
+    quiz.querySelectorAll(".opts button").forEach((b) => b.classList.remove("right", "wrong"));
+    if (btn.hasAttribute("data-right")) { btn.classList.add("right"); msg.textContent = "정답입니다!"; msg.style.color = "var(--ok-ink)"; }
+    else { btn.classList.add("wrong"); msg.textContent = "다시 생각해 보세요."; msg.style.color = "var(--warn-ink)"; }
+  }));
+})();
+</script>
+
+</body>
+</html>
