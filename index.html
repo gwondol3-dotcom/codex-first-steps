@@ -251,6 +251,16 @@ tr:last-child td { border-bottom: 0; }
 .final blockquote { margin: 12px 0 16px; font-size: clamp(1.3rem, 3.2vw, 1.75rem); font-weight: 900; color: var(--ink); line-height: 1.5; }
 .final p strong { color: var(--accent); }
 
+.dl { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--tint); border: 1.5px dashed var(--accent-soft); border-radius: 14px; padding: 14px 16px; }
+.dl-icon { width: 56px; height: 56px; border-radius: 12px; background: var(--surface); display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; font-size: .8rem; color: var(--accent); }
+.dl h4 { font-size: 1.05rem; font-weight: 700; }
+.dl p { font-size: var(--fs-small); color: var(--muted); }
+.dl-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: .9375rem; color: #fff; background: var(--accent); border-radius: 10px; padding: 10px 18px; text-decoration: none; white-space: nowrap; }
+.dl-btn:hover { filter: brightness(1.08); }
+:root[data-theme="dark"] .dl-btn { color: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dl-btn { color: var(--bg); } }
+@media (max-width: 560px) { .dl { grid-template-columns: 1fr; } .dl-icon { display: none; } .dl-btn { justify-content: center; } }
+.or { text-align: center; font-size: .875rem; color: var(--muted); font-weight: 700; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: .9375rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 30; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .footer { margin-top: 48px; font-size: .8125rem; color: var(--muted); }
@@ -300,7 +310,7 @@ tr:last-child td { border-bottom: 0; }
         <span class="chip">2026 강릉교육지원청 생성형AI 연수</span>
         <h1>교원 대상 Codex 첫걸음</h1>
         <p>코딩을 몰라도 만드는 나만의 교육용 프로그램</p>
-        <div class="tags"><span>데스크탑 에이전트</span><span>실습 중심 120분</span><span>OpenAI Codex</span></div>
+        <div class="tags"><span>데스크탑 에이전트</span><span>실습 7개 + 나만의 프로그램</span><span>OpenAI Codex</span></div>
       </div>
       <img src="assets/hero.png" alt="노트북 옆에 앉은 로봇 도우미" width="675" height="348">
     </div>
@@ -330,9 +340,9 @@ tr:last-child td { border-bottom: 0; }
               <tr><td>4부 · 수업 콘텐츠 만들기</td><td class="num">20분</td><td>실습 3. 수업용 퀴즈 게임</td></tr>
               <tr><td>5부 · 교사업무 자동화</td><td class="num">20분</td><td>실습 4. CSV 설문 결과 자동 분석</td></tr>
               <tr><td>6부 · 컴퓨터 업무 자동화</td><td class="num">15분</td><td>실습 5. 학교 파일 자동 정리</td></tr>
-              <tr><td>7부 · 나만의 프로그램</td><td class="num">10분</td><td>자유 실습 · 마무리 미션</td></tr>
-              <tr><td>심화 · 학교 업무</td><td class="num">20분</td><td>실습 6. 학교 계획서 만들기 (한글 hwpx)</td></tr>
-              <tr><td>심화 · 영상 만들기</td><td class="num">20분</td><td>실습 7. 모션그래픽 학교 홍보영상</td></tr>
+              <tr><td>7부 · 학교 문서 만들기</td><td class="num">20분</td><td>실습 6. 학교 계획서 만들기 (한글 hwpx)</td></tr>
+              <tr><td>8부 · 영상 만들기</td><td class="num">20분</td><td>실습 7. 모션그래픽 학교 홍보영상</td></tr>
+              <tr><td>9부 · 나만의 프로그램</td><td class="num">10분</td><td>자유 실습 · 마무리 미션</td></tr>
             </tbody>
           </table>
         </div>
@@ -423,9 +433,9 @@ tr:last-child td { border-bottom: 0; }
  ├─ 03-quiz      실습 3 퀴즈
  ├─ 04-survey    실습 4 설문 분석
  ├─ 05-files     실습 5 파일 정리
- ├─ 06-mine      나만의 프로그램
- ├─ 07-plan      실습 6 계획서
- └─ 08-video     실습 7 홍보영상</pre>
+ ├─ 06-plan      실습 6 계획서
+ ├─ 07-video     실습 7 홍보영상
+ └─ 08-mine      나만의 프로그램</pre>
             <div class="note warn" style="margin-top:12px"><b>실습 5 전용 연습 폴더</b>바탕화면에 <b>Codex연습</b> 폴더를 따로 만들어 둡니다. 파일 이름 변경 실습은 반드시 이 연습 폴더에서만 합니다.</div>
             <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>C:\codex-lab 아래 실습 폴더 8개를 만들었다</span></label></div>
           </div>
@@ -1006,12 +1016,21 @@ HTML 파일로 실행할 수 있도록 해줘.</pre>
         <div class="note warn"><b>매우 중요한 안전 규칙</b>첫 실습에서는 절대로 실제 업무 폴더를 사용하지 않습니다. 바탕화면의 <b>Codex연습</b> 폴더에 테스트용 파일을 넣어 실습합니다.</div>
 
         <div class="step">
-          <div class="step-title"><span class="badge">준비</span><h3>연습용 파일 만들기</h3></div>
+          <div class="step-title"><span class="badge">준비</span><h3>연습용 파일 10개 준비하기</h3></div>
+          <p><b>방법 A (추천)</b> 아래 파일을 내려받아 압축을 풉니다. <b>Codex연습</b> 폴더가 나오면 바탕화면으로 옮깁니다.</p>
+          <div class="dl">
+            <div class="dl-icon" aria-hidden="true">ZIP</div>
+            <div><h4>Codex연습.zip · 연습 파일 10개</h4><p>사진 IMG_1023~1027.jpg 5개, 스크린샷.png, 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx · 1.8MB</p></div>
+            <a class="dl-btn" href="https://gwondol3-dotcom.github.io/codex-first-steps/downloads/codex-practice-files.zip" download="Codex연습.zip" target="_blank" rel="noopener">내려받기</a>
+          </div>
+          <div class="note info"><b>압축 풀기</b>내려받은 파일을 우클릭 → [압축 풀기] 또는 [모두 압축 풀기]를 누릅니다.</div>
+          <p class="or">또는</p>
+          <p><b>방법 B</b> Codex에게 연습 파일을 만들어 달라고 합니다.</p>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>바탕화면에 'Codex연습' 폴더를 만들고, 그 안에 실습용 빈 파일을 만들어줘.
-- IMG_1023.jpg ~ IMG_1032.jpg (10개)
-- 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx, 스크린샷.png
+<pre>바탕화면에 'Codex연습' 폴더를 만들고, 그 안에 실습용 빈 파일 10개를 만들어줘.
+- IMG_1023.jpg ~ IMG_1027.jpg (5개)
+- 스크린샷.png, 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx
 내용은 비어 있어도 괜찮아. 다른 폴더는 건드리지 마.</pre>
           </div>
           <div class="note info"><b>승인 카드가 뜹니다</b>작업 폴더 밖(바탕화면)에 파일을 만들기 때문입니다. 내용을 읽고 승인하세요.</div>
@@ -1093,7 +1112,7 @@ pptx → 프레젠테이션
         <div>
           <span class="eyebrow">실습 6</span>
           <h2 id="h-p6">학교 계획서 만들기 (한글 hwpx)</h2>
-          <div class="meta"><span>난이도 <span class="stars">★★★☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\07-plan</b></span><span>20분</span></div>
+          <div class="meta"><span>난이도 <span class="stars">★★★☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\06-plan</b></span><span>20분</span></div>
           <div class="goal"><b>실습 목표</b> 우리 학교 계획서 <b>양식</b>을 Codex에게 학습시키고, <b>참고자료</b>를 읽게 해서 같은 형식의 새 계획서를 <b>한글 파일(hwpx)</b>로 만듭니다.</div>
         </div>
         <img src="assets/plan.png" alt="" width="426" height="533">
@@ -1112,11 +1131,16 @@ pptx → 프레젠테이션
         <div class="step">
           <div class="step-title"><span class="badge">준비</span><h3>실습 폴더에 파일 넣기</h3></div>
           <ol>
-            <li><code>C:\codex-lab\07-plan</code> 폴더를 만듭니다.</li>
-            <li>강사가 나눠 준 <b>양식 파일</b>과 <b>참고파일 폴더</b>를 이 폴더에 복사합니다.</li>
-            <li>Codex 앱에서 <code>07-plan</code> 폴더를 열고 새 스레드를 시작합니다.</li>
+            <li><code>C:\codex-lab\06-plan</code> 폴더를 만듭니다.</li>
+            <li>아래 실습 파일을 내려받아 압축을 풀고, 나온 <b>양식 파일</b>과 <b>참고파일 폴더</b>를 이 폴더에 넣습니다.</li>
+            <li>Codex 앱에서 <code>06-plan</code> 폴더를 열고 새 스레드를 시작합니다.</li>
           </ol>
-<pre class="tree">C:\codex-lab\07-plan
+<div class="dl">
+            <div class="dl-icon" aria-hidden="true">ZIP</div>
+            <div><h4>계획서만들기_실습파일.zip · 양식 + 참고파일 8개</h4><p>학생도박예방교육 계획 양식(hwpx)과 언어폭력 예방교육주간 참고자료 · 17MB</p></div>
+            <a class="dl-btn" href="https://gwondol3-dotcom.github.io/codex-first-steps/downloads/plan-practice-files.zip" download="계획서만들기_실습파일.zip" target="_blank" rel="noopener">내려받기</a>
+          </div>
+<pre class="tree">C:\codex-lab\06-plan
  ├─ 2026학년도 학생도박예방교육 계획(00초등학교).hwpx   ← 양식
  └─ 참고파일
      ├─ 1. 언어폭력 예방교육자료 안내 포스터.png
@@ -1211,7 +1235,12 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">파일이 열리지 않을 때</span><button class="copy" type="button">복사</button></div>
 <pre>한글에서 파일을 열면 '손상된 파일'이라고 나와. 원본 양식 파일과 비교해서 원인을 찾아 고쳐줘.</pre>
           </div>
-          <div class="note warn"><b>내용 사실 확인은 꼭 직접</b>법 조항, 통계 수치, 누리집 주소, 날짜는 AI가 틀리게 쓸 수 있습니다. 결재 전에 참고자료 원문과 대조하세요. 마지막으로 강사가 보여 주는 완성 예시와 비교해 봅니다.</div>
+          <div class="note warn"><b>내용 사실 확인은 꼭 직접</b>법 조항, 통계 수치, 누리집 주소, 날짜는 AI가 틀리게 쓸 수 있습니다. 결재 전에 참고자료 원문과 대조하세요. 마지막으로 완성 예시와 비교해 봅니다.</div>
+          <div class="dl">
+            <div class="dl-icon" aria-hidden="true">HWPX</div>
+            <div><h4>완성 예시 · 비교용</h4><p>2026학년도 언어폭력 예방교육주간 운영 계획(00초등학교).hwpx · 실습 폴더에는 넣지 마세요</p></div>
+            <a class="dl-btn" href="https://gwondol3-dotcom.github.io/codex-first-steps/downloads/plan-example.hwpx" download="2026학년도 언어폭력 예방교육주간 운영 계획(00초등학교)_완성예시.hwpx" target="_blank" rel="noopener">내려받기</a>
+          </div>
         </div>
 
         <div class="step">
@@ -1231,7 +1260,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
         <div>
           <span class="eyebrow">실습 7</span>
           <h2 id="h-p7">모션그래픽 학교 홍보영상 만들기</h2>
-          <div class="meta"><span>난이도 <span class="stars">★★★★☆</span></span><span>작업 폴더 <b>C:\codex-lab\08-video</b></span><span>20분</span></div>
+          <div class="meta"><span>난이도 <span class="stars">★★★★☆</span></span><span>작업 폴더 <b>C:\codex-lab\07-video</b></span><span>20분</span></div>
           <div class="goal"><b>실습 목표</b> Codex가 인터넷에서 우리 학교 자료를 찾아 대본을 쓰고, 글자와 도형이 움직이는 <b>모션그래픽 홍보영상(MP4)</b>을 만들게 합니다.</div>
         </div>
         <img src="assets/video.png" alt="" width="498" height="373">
@@ -1305,7 +1334,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
         <div class="step">
           <div class="step-title"><span class="badge">더 정교하게</span><h3>자료 폴더를 만들어 내 사진과 자료로 만들기</h3></div>
           <p>인터넷 자료만으로는 원하는 장면이 나오지 않을 수 있습니다. <b>폴더를 하나 만들고, 쓰고 싶은 자료와 사진을 함께 넣으면</b> Codex가 그 자료로 훨씬 정교한 영상을 만듭니다.</p>
-<pre class="tree">C:\codex-lab\08-video\자료
+<pre class="tree">C:\codex-lab\07-video\자료
  ├─ 학교전경.jpg          (얼굴이 나오지 않는 사진)
  ├─ 운동회_뒷모습.jpg
  ├─ 도서관.jpg
@@ -1334,7 +1363,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
         <div>
           <span class="eyebrow">마무리 미션</span>
           <h2 id="h-mission">나만의 프로그램 만들기</h2>
-          <div class="meta"><span>작업 폴더 <b>C:\codex-lab\06-mine</b></span><span>10분</span></div>
+          <div class="meta"><span>작업 폴더 <b>C:\codex-lab\08-mine</b></span><span>10분</span></div>
           <div class="goal">아래에서 하나를 고르거나, 평소 <b>"이거 매번 하기 귀찮은데?"</b> 했던 업무 하나를 고릅니다.</div>
         </div>
         <img src="assets/rocket.png" alt="" width="421" height="592">
