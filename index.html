@@ -288,6 +288,7 @@ tr:last-child td { border-bottom: 0; }
     <a href="#app"><i class="dot"></i>앱 화면과 승인 모드</a>
     <a href="#basics"><i class="dot"></i>Codex에게 일 시키기</a>
     <div class="toc-group">실습</div>
+    <a href="#folders"><i class="dot"></i>실습 폴더 만들기</a>
     <a href="#p1"><i class="dot"></i>실습 1 · 수업용 타이머</a>
     <a href="#p2"><i class="dot"></i>실습 2 · 발표자·모둠 편성기</a>
     <a href="#p3"><i class="dot"></i>실습 3 · 수업용 퀴즈</a>
@@ -425,19 +426,10 @@ tr:last-child td { border-bottom: 0; }
           <div>
             <span class="badge">STEP 5</span>
             <h3>실습 폴더 만들기</h3>
-            <p>Codex는 열어 준 폴더 안에서 작업합니다. 실습마다 폴더를 나누면 결과물이 섞이지 않습니다. 한글이나 띄어쓰기가 들어간 경로는 오류가 날 수 있으니 <b>영문 경로</b>를 씁니다.</p>
-            <p style="margin-top:8px;font-size:var(--fs-small)">파일 탐색기 → 로컬 디스크(C:) → 빈 곳 우클릭 → 새로 만들기 → 폴더</p>
-<pre class="tree" style="margin-top:10px">C:\codex-lab
- ├─ 01-timer     실습 1 타이머
- ├─ 02-picker    실습 2 발표자·모둠
- ├─ 03-quiz      실습 3 퀴즈
- ├─ 04-survey    실습 4 설문 분석
- ├─ 05-files     실습 5 파일 정리
- ├─ 06-plan      실습 6 계획서
- ├─ 07-video     실습 7 홍보영상
- └─ 08-mine      나만의 프로그램</pre>
-            <div class="note warn" style="margin-top:12px"><b>실습 5 전용 연습 폴더</b>바탕화면에 <b>Codex연습</b> 폴더를 따로 만들어 둡니다. 파일 이름 변경 실습은 반드시 이 연습 폴더에서만 합니다.</div>
-            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>C:\codex-lab 아래 실습 폴더 8개를 만들었다</span></label></div>
+            <p>Codex는 열어 준 폴더 안에서 작업합니다. 지금은 <b>C:\codex-lab</b> 폴더 하나만 만드세요. 실습별 하위 폴더 8개는 실습 1에 들어가기 전에 <b>Codex에게 시켜서</b> 만듭니다. 한글이나 띄어쓰기가 들어간 경로는 오류가 날 수 있으니 <b>영문 경로</b>를 씁니다.</p>
+            <p style="margin-top:8px;font-size:var(--fs-small)">파일 탐색기 → 로컬 디스크(C:) → 빈 곳 우클릭 → 새로 만들기 → 폴더 → 이름 <b>codex-lab</b></p>
+<pre class="tree" style="margin-top:10px">C:\codex-lab        ← 지금 만들 폴더는 이것 하나</pre>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>C:\codex-lab 폴더를 만들었다</span></label></div>
           </div>
         </div>
 
@@ -483,9 +475,9 @@ python --version</pre>
           <div class="tile"><span class="k">④ 승인 카드</span><p>파일 수정이나 명령 실행 전에 허락을 구합니다. 읽고 누르세요.</p></div>
         </div>
         <div class="step">
-          <div class="step-title"><span class="badge">시작 순서</span><h3>실습 폴더를 열고 새 스레드 시작</h3></div>
+          <div class="step-title"><span class="badge">시작 순서</span><h3>폴더를 열고 새 스레드 시작</h3></div>
           <ol>
-            <li>왼쪽 <b>[+ / Open project]</b> → <code>C:\codex-lab\01-timer</code> 선택</li>
+            <li>왼쪽 <b>[+ / Open project]</b> → 처음에는 <code>C:\codex-lab</code> 선택</li>
             <li>처음 여는 폴더는 신뢰 여부를 묻습니다. 실습 폴더이므로 <b>Trust</b>를 누릅니다.</li>
             <li>새 스레드에서 요청합니다. 실습 하나에 스레드 하나, 주제가 바뀌면 새 스레드를 엽니다.</li>
           </ol>
@@ -548,6 +540,56 @@ python --version</pre>
 처음 사용하는 교사도 쉽게 사용할 수 있도록 단순하게 만들어줘.
 별도의 설치 없이 실행할 수 있도록 만들어줘.</pre>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 폴더 만들기 ===================== -->
+    <section id="folders" aria-labelledby="h-folders">
+      <span class="eyebrow">실습 시작 전</span>
+      <h2 id="h-folders">Codex로 실습 폴더 8개 만들기</h2>
+      <p class="lead">Codex에게 처음 시키는 일입니다. 폴더를 하나씩 만드는 대신 Codex에게 한 번에 만들게 해 봅니다.</p>
+      <div class="stack">
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>C:\codex-lab 폴더 열기</h3></div>
+          <ol>
+            <li>Codex 앱 왼쪽 <b>[+ / Open project]</b> → <code>C:\codex-lab</code>을 선택합니다.</li>
+            <li>신뢰 여부를 물으면 <b>Trust</b>를 누릅니다.</li>
+            <li>새 스레드를 엽니다.</li>
+          </ol>
+        </div>
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>하위 폴더 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>지금 열려 있는 C:\codex-lab 폴더 안에 실습용 하위 폴더 8개를 만들어줘.
+
+- 01-timer : 실습 1 수업용 타이머
+- 02-picker : 실습 2 발표자 추첨·모둠 편성기
+- 03-quiz : 실습 3 수업용 퀴즈
+- 04-survey : 실습 4 설문 분석
+- 05-files : 실습 5 파일 자동 정리
+- 06-plan : 실습 6 계획서 만들기
+- 07-video : 실습 7 학교 홍보영상
+- 08-mine : 나만의 프로그램
+
+폴더만 만들고 다른 파일은 만들지 마.
+다 만든 다음 폴더 목록을 보여줘.</pre>
+          </div>
+          <div class="note info"><b>승인 카드가 뜨면</b>폴더를 만드는 명령인지 읽어 보고 승인합니다.</div>
+<pre class="tree">C:\codex-lab
+ ├─ 01-timer     실습 1 타이머
+ ├─ 02-picker    실습 2 발표자·모둠
+ ├─ 03-quiz      실습 3 퀴즈
+ ├─ 04-survey    실습 4 설문 분석
+ ├─ 05-files     실습 5 파일 정리
+ ├─ 06-plan      실습 6 계획서
+ ├─ 07-video     실습 7 홍보영상
+ └─ 08-mine      나만의 프로그램</pre>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>파일 탐색기에서 C:\codex-lab 안에 폴더 8개가 생긴 것을 확인했다</span></label>
+          </div>
+        </div>
+        <div class="note"><b>실습 1부터는</b>각 실습의 작업 폴더(예: <code>01-timer</code>)를 왼쪽 <b>[+ / Open project]</b>로 따로 열고, 새 스레드에서 시작합니다.</div>
       </div>
     </section>
 
@@ -1131,7 +1173,7 @@ pptx → 프레젠테이션
         <div class="step">
           <div class="step-title"><span class="badge">준비</span><h3>실습 폴더에 파일 넣기</h3></div>
           <ol>
-            <li><code>C:\codex-lab\06-plan</code> 폴더를 만듭니다.</li>
+            <li>파일 탐색기에서 실습 시작 전에 만든 <code>C:\codex-lab\06-plan</code> 폴더를 엽니다.</li>
             <li>아래 실습 파일을 내려받아 압축을 풀고, 나온 <b>양식 파일</b>과 <b>참고파일 폴더</b>를 이 폴더에 넣습니다.</li>
             <li>Codex 앱에서 <code>06-plan</code> 폴더를 열고 새 스레드를 시작합니다.</li>
           </ol>
