@@ -283,6 +283,8 @@ tr:last-child td { border-bottom: 0; }
     <a href="#p3"><i class="dot"></i>실습 3 · 수업용 퀴즈</a>
     <a href="#p4"><i class="dot"></i>실습 4 · 설문 분석</a>
     <a href="#p5"><i class="dot"></i>실습 5 · 파일 자동 정리</a>
+    <a href="#p6"><i class="dot"></i>실습 6 · 계획서 만들기</a>
+    <a href="#p7"><i class="dot"></i>실습 7 · 학교 홍보영상</a>
     <a href="#mission"><i class="dot"></i>마무리 미션</a>
     <div class="toc-group">정리</div>
     <a href="#phrases"><i class="dot"></i>수정 요청 6가지 표현</a>
@@ -329,6 +331,8 @@ tr:last-child td { border-bottom: 0; }
               <tr><td>5부 · 교사업무 자동화</td><td class="num">20분</td><td>실습 4. CSV 설문 결과 자동 분석</td></tr>
               <tr><td>6부 · 컴퓨터 업무 자동화</td><td class="num">15분</td><td>실습 5. 학교 파일 자동 정리</td></tr>
               <tr><td>7부 · 나만의 프로그램</td><td class="num">10분</td><td>자유 실습 · 마무리 미션</td></tr>
+              <tr><td>심화 · 학교 업무</td><td class="num">20분</td><td>실습 6. 학교 계획서 만들기 (한글 hwpx)</td></tr>
+              <tr><td>심화 · 영상 만들기</td><td class="num">20분</td><td>실습 7. 모션그래픽 학교 홍보영상</td></tr>
             </tbody>
           </table>
         </div>
@@ -419,9 +423,11 @@ tr:last-child td { border-bottom: 0; }
  ├─ 03-quiz      실습 3 퀴즈
  ├─ 04-survey    실습 4 설문 분석
  ├─ 05-files     실습 5 파일 정리
- └─ 06-mine      나만의 프로그램</pre>
+ ├─ 06-mine      나만의 프로그램
+ ├─ 07-plan      실습 6 계획서
+ └─ 08-video     실습 7 홍보영상</pre>
             <div class="note warn" style="margin-top:12px"><b>실습 5 전용 연습 폴더</b>바탕화면에 <b>Codex연습</b> 폴더를 따로 만들어 둡니다. 파일 이름 변경 실습은 반드시 이 연습 폴더에서만 합니다.</div>
-            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>C:\codex-lab 아래 실습 폴더 6개를 만들었다</span></label></div>
+            <div class="checks" style="margin-top:12px"><label class="check"><input type="checkbox"><span>C:\codex-lab 아래 실습 폴더 8개를 만들었다</span></label></div>
           </div>
         </div>
 
@@ -433,7 +439,7 @@ tr:last-child td { border-bottom: 0; }
             <div class="grid2" style="margin-top:6px">
               <div class="tile">
                 <h4>Node.js (LTS)</h4>
-                <p>터미널에서 Codex CLI를 npm으로 설치·업데이트할 때 필요합니다. Windows Installer(.msi)를 받아 기본값으로 설치합니다.</p>
+                <p><b>실습 7 홍보영상</b>을 만들 때와, 터미널에서 Codex CLI를 npm으로 설치·업데이트할 때 필요합니다. Windows Installer(.msi)를 받아 기본값으로 설치합니다.</p>
                 <a class="link-btn" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js <small>nodejs.org</small></a>
               </div>
               <div class="tile">
@@ -1081,6 +1087,247 @@ pptx → 프레젠테이션
       </div>
     </section>
 
+    <!-- ===================== 실습 6 ===================== -->
+    <section id="p6" data-practice aria-labelledby="h-p6">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 6</span>
+          <h2 id="h-p6">학교 계획서 만들기 (한글 hwpx)</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★★☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\07-plan</b></span><span>20분</span></div>
+          <div class="goal"><b>실습 목표</b> 우리 학교 계획서 <b>양식</b>을 Codex에게 학습시키고, <b>참고자료</b>를 읽게 해서 같은 형식의 새 계획서를 <b>한글 파일(hwpx)</b>로 만듭니다.</div>
+        </div>
+        <img src="assets/plan.png" alt="" width="426" height="533">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="flow"><span>양식 학습</span><span>참고자료 읽기</span><span>hwpx로 만들기</span><span>한글에서 확인·수정</span></div>
+
+        <div class="grid3">
+          <div class="tile"><span class="k">양식 (따라 할 틀)</span><p>2026학년도 학생도박예방교육 계획(00초등학교).hwpx</p></div>
+          <div class="tile"><span class="k">참고파일 폴더 (내용)</span><p>포스터, 교수·학습 자료, 학부모 소식지, 빙고 이벤트, 챌린지 안내 등 PDF·이미지·한글 파일 8개</p></div>
+          <div class="tile"><span class="k">만들 결과물</span><p>2026학년도 언어폭력 예방교육주간 운영 계획(00초등학교).hwpx</p></div>
+        </div>
+
+        <div class="note info"><b>hwpx란?</b>한글 2014 이후의 기본 저장 형식입니다. 파일 안이 글자(XML)로 되어 있어 Codex가 읽고 쓸 수 있습니다. 예전 형식인 <b>.hwp</b>는 Codex가 읽기 어려우니, 한글에서 [다른 이름으로 저장] → 파일 형식 <b>한글 문서(*.hwpx)</b>로 바꿔 넣으면 됩니다.</div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">준비</span><h3>실습 폴더에 파일 넣기</h3></div>
+          <ol>
+            <li><code>C:\codex-lab\07-plan</code> 폴더를 만듭니다.</li>
+            <li>강사가 나눠 준 <b>양식 파일</b>과 <b>참고파일 폴더</b>를 이 폴더에 복사합니다.</li>
+            <li>Codex 앱에서 <code>07-plan</code> 폴더를 열고 새 스레드를 시작합니다.</li>
+          </ol>
+<pre class="tree">C:\codex-lab\07-plan
+ ├─ 2026학년도 학생도박예방교육 계획(00초등학교).hwpx   ← 양식
+ └─ 참고파일
+     ├─ 1. 언어폭력 예방교육자료 안내 포스터.png
+     ├─ 2. 올바른 언어 사용 관련 교수·학습 자료 및 프로그램.hwpx
+     ├─ 3. 언어폭력 예방 학부모 소식지.pdf
+     ├─ 4-1. 도란도란 언어폭력 예방 빙고 소풍 이벤트 포스터.pdf
+     ├─ 4-2. 도란도란 언어폭력 예방 빙고 소풍 이벤트 카드뉴스.pdf
+     ├─ 5. 바른말 고운말 쓰는 니가 좋아 챌린지 안내.pdf
+     ├─ 6. 2026년 언어폭력 예방교육주간 포스터.jpg
+     └─ 언어폭력 예방 교육주간 운영 계획(인디용).hwp</pre>
+          <div class="note warn"><b>완성 예시 파일은 넣지 마세요</b>완성된 운영 계획 파일이 폴더에 있으면 Codex가 그 파일을 베낍니다. 완성 예시는 마지막에 결과를 비교할 때만 씁니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>양식 학습시키기</h3></div>
+          <p>먼저 양식만 분석하게 합니다. 이 단계에서는 파일을 만들지 않습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이 폴더의 '2026학년도 학생도박예방교육 계획(00초등학교).hwpx'는 우리 학교 계획서 양식이야.
+
+hwpx 파일 안의 구조를 분석해서 다음을 정리해줘. 아직 새 파일은 만들지 마.
+
+1. 제목, 학교명, 대단원(Ⅰ~Ⅵ)의 순서와 제목
+2. 각 단원에서 쓰는 기호와 들여쓰기 규칙(ㅇ, -, ※ 등)
+3. 표의 위치와 구조(몇 행 몇 열인지, 머리행 모양)
+4. 글꼴, 글자 크기, 문단 모양 같은 서식 특징</pre>
+          </div>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>Ⅰ. 목적부터 Ⅵ. 기대 효과까지 단원 순서가 정리되었다</span></label>
+            <label class="check"><input type="checkbox"><span>ㅇ, - 기호와 표 구조가 설명되었다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>참고자료 읽고 내용 정리하기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>참고파일 폴더에 있는 자료를 모두 읽고, '2026학년도 언어폭력 예방교육주간 운영 계획'에 들어갈 내용을 정리해줘. 아직 파일은 만들지 마.
+
+- 운영 기간, 대상, 주제
+- 학년군별(1-2학년, 3-4학년, 5-6학년) 교육 내용
+- 학생·교직원·학부모 대상 활동
+- 일자별 바른 언어 실천 과제
+- 관련 교육자료와 접속 경로
+
+PDF와 이미지는 글자를 직접 읽어서 정리해줘.
+읽지 못한 파일이 있으면 어떤 파일인지 알려줘.</pre>
+          </div>
+          <div class="note"><b>읽지 못한 파일이 있다고 하면</b>.hwp 파일은 한글에서 열어 hwpx로 다시 저장해 넣거나, "그 파일은 빼고 정리해줘"라고 답합니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>양식 그대로 hwpx 계획서 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>앞에서 분석한 양식을 그대로 사용해서 '2026학년도 언어폭력 예방교육주간 운영 계획(00초등학교).hwpx' 파일을 만들어줘.
+
+- 원본 양식 파일을 복사한 다음 내용만 바꾸는 방식으로 만들고, 원본 파일은 수정하지 마.
+- 제목, 대단원 순서(Ⅰ~Ⅵ), 기호, 표 서식, 글꼴은 양식과 똑같이 유지해줘.
+- 내용은 STEP 2에서 정리한 참고자료로 채워줘.
+- 운영 기간은 2026. 10. 7.(수) ~ 10. 16.(금)이고, 한글날(10. 9.)을 포함해줘.
+- 학년군별 교육 내용 표와 일자별 실천 과제 표(날짜, 실천 과제, 알림장 문구)를 넣어줘.
+- 표의 행이 더 필요하면 기존 행의 서식을 그대로 복사해서 늘려줘.
+
+완성한 다음 hwpx 파일의 압축 구조와 XML이 손상되지 않았는지 검사해줘.</pre>
+          </div>
+          <div class="note info"><b>시간이 조금 걸립니다</b>양식을 복사하고 글자와 표를 하나씩 바꾸므로 3~5분 정도 걸릴 수 있습니다. 승인 카드가 뜨면 읽고 승인합니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 4</span><h3>한글에서 열어 확인하고 고치기</h3></div>
+          <p>폴더에 생긴 hwpx 파일을 더블클릭해 한글로 엽니다.</p>
+          <div class="checks">
+            <div class="checks-title">확인해 볼 것</div>
+            <label class="check"><input type="checkbox"><span>한글에서 오류 없이 열린다</span></label>
+            <label class="check"><input type="checkbox"><span>제목과 학교명이 양식과 같은 모양이다</span></label>
+            <label class="check"><input type="checkbox"><span>Ⅰ. 목적부터 Ⅵ까지 순서와 기호가 양식과 같다</span></label>
+            <label class="check"><input type="checkbox"><span>학년군별 교육 내용 표와 일자별 실천 과제 표가 있다</span></label>
+            <label class="check"><input type="checkbox"><span>날짜와 요일이 맞다 (10. 7. 수 ~ 10. 16. 금)</span></label>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">수정 요청 예시 · 필요한 것만 골라 쓰세요</span><button class="copy" type="button">복사</button></div>
+<pre>한글에서 열어 보니 다음 부분을 고쳐야 해.
+
+- 일자별 실천 과제 표의 테두리와 머리행 색을 학년군별 표와 같게 맞춰줘.
+- 10. 9.(금) 한글날 행은 회색 음영으로 표시해줘.
+- 학교명은 ○○초등학교로 바꿔줘.
+
+원본 양식의 서식은 그대로 유지해줘.</pre>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">파일이 열리지 않을 때</span><button class="copy" type="button">복사</button></div>
+<pre>한글에서 파일을 열면 '손상된 파일'이라고 나와. 원본 양식 파일과 비교해서 원인을 찾아 고쳐줘.</pre>
+          </div>
+          <div class="note warn"><b>내용 사실 확인은 꼭 직접</b>법 조항, 통계 수치, 누리집 주소, 날짜는 AI가 틀리게 쓸 수 있습니다. 결재 전에 참고자료 원문과 대조하세요. 마지막으로 강사가 보여 주는 완성 예시와 비교해 봅니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">더 해 보기</span><h3>다른 계획서에도 그대로 쓸 수 있습니다</h3></div>
+          <p>양식 파일 하나와 참고자료 폴더만 있으면 성교육, 생명존중교육, 정보통신윤리교육 계획서도 같은 방법으로 만들 수 있습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">재활용 예시</span><button class="copy" type="button">복사</button></div>
+<pre>같은 양식으로 '2026학년도 정보통신윤리교육 계획(00초등학교).hwpx'를 만들고 싶어. 참고파일2 폴더의 자료를 읽고, 먼저 들어갈 내용을 정리해서 보여줘.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 실습 7 ===================== -->
+    <section id="p7" data-practice aria-labelledby="h-p7">
+      <div class="practice-head">
+        <div>
+          <span class="eyebrow">실습 7</span>
+          <h2 id="h-p7">모션그래픽 학교 홍보영상 만들기</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★★★☆</span></span><span>작업 폴더 <b>C:\codex-lab\08-video</b></span><span>20분</span></div>
+          <div class="goal"><b>실습 목표</b> Codex가 인터넷에서 우리 학교 자료를 찾아 대본을 쓰고, 글자와 도형이 움직이는 <b>모션그래픽 홍보영상(MP4)</b>을 만들게 합니다.</div>
+        </div>
+        <img src="assets/video.png" alt="" width="498" height="373">
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="flow"><span>학교 자료 찾기</span><span>대본 확인</span><span>영상 만들기</span><span>MP4 확인·수정</span></div>
+
+        <div class="grid2">
+          <div class="note info"><b>필요한 것: Node.js</b>영상을 만드는 도구(Remotion)가 Node.js로 움직입니다. 설치하지 않았다면 PART 0의 STEP 6을 먼저 하세요.</div>
+          <div class="note"><b>시간이 걸립니다</b>처음에는 필요한 도구를 내려받고, 영상 파일로 만드는(렌더링) 데 몇 분이 걸립니다.</div>
+        </div>
+        <div class="note warn"><b>저작권과 초상권</b>학생 얼굴이 알아보이는 사진은 쓰지 않습니다. 누리집 사진과 글은 학교 홍보 목적으로만 쓰고, 외부에 공개하기 전에 학교의 확인을 받습니다. 배경음악은 저작권 걱정 없는 음원만 씁니다.</div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 1</span><h3>인터넷에서 학교 자료 찾고 대본 받기</h3></div>
+          <p>○○ 부분에 소속 학교 이름과 누리집 주소를 넣습니다. 주소를 함께 알려 주면 다른 학교 자료를 가져오는 실수를 줄일 수 있습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>우리 학교 홍보영상을 모션그래픽으로 만들고 싶어.
+
+- 학교: ○○초등학교
+- 학교 누리집: ○○○○ (주소를 붙여 넣으세요)
+
+인터넷에서 우리 학교의 학교 소개, 교육 목표, 교훈, 특색 교육활동, 주소를 찾아서 정리해줘.
+그다음 30초짜리 홍보영상 대본을 장면 6개 정도로 나누어 보여줘.
+각 장면마다 화면에 나올 글자와 움직임을 적어줘.
+
+자료를 어디서 가져왔는지 출처도 함께 알려줘. 아직 영상은 만들지 마.</pre>
+          </div>
+          <div class="note"><b>인터넷 검색이 안 된다고 하면</b>학교 누리집의 학교 소개 글을 복사해 <code>학교소개.txt</code>로 저장해 폴더에 넣고 "학교소개.txt를 읽고 대본을 써줘"라고 요청합니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>모션그래픽 영상 만들기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>좋아. 그 대본으로 30초 길이의 학교 홍보 모션그래픽 영상을 만들어줘.
+
+- 화면 크기 1920×1080, 30fps, MP4 파일
+- Remotion으로 만들어줘.
+- 장면마다 글자가 부드럽게 나타나고, 도형과 아이콘이 움직이는 모션그래픽 효과를 넣어줘.
+- 밝고 따뜻한 색감, 교실 TV에서도 잘 보이는 큰 글씨
+- 학생 얼굴이 나오는 사진은 쓰지 마.
+- 마지막 장면에는 학교 이름과 누리집 주소를 보여줘.
+
+완성되면 out 폴더에 MP4로 렌더링하고, 미리보기 방법도 알려줘.</pre>
+          </div>
+          <div class="checks">
+            <div class="checks-title">확인해 볼 것</div>
+            <label class="check"><input type="checkbox"><span>out 폴더에 MP4 파일이 생겼다</span></label>
+            <label class="check"><input type="checkbox"><span>영상 길이가 약 30초이고 장면이 자연스럽게 넘어간다</span></label>
+            <label class="check"><input type="checkbox"><span>학교 이름, 교훈, 주소가 정확하다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>보고 고치기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">수정 요청 예시 · 필요한 것만 골라 쓰세요</span><button class="copy" type="button">복사</button></div>
+<pre>영상을 보고 다음을 고쳐줘.
+
+- 2번 장면 글자가 너무 빨리 사라져. 1초 더 보여줘.
+- 첫 장면에 학교 이름이 더 크게, 튀어 오르듯 나타나게 해줘.
+- 장면이 바뀔 때 부드럽게 밀려나는 전환 효과를 넣어줘.
+- 배경음악 자리를 만들어 두고, 내가 music.mp3를 폴더에 넣으면 들어가게 해줘.
+
+나머지는 그대로 두고, 다시 MP4로 렌더링해줘.</pre>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">더 정교하게</span><h3>자료 폴더를 만들어 내 사진과 자료로 만들기</h3></div>
+          <p>인터넷 자료만으로는 원하는 장면이 나오지 않을 수 있습니다. <b>폴더를 하나 만들고, 쓰고 싶은 자료와 사진을 함께 넣으면</b> Codex가 그 자료로 훨씬 정교한 영상을 만듭니다.</p>
+<pre class="tree">C:\codex-lab\08-video\자료
+ ├─ 학교전경.jpg          (얼굴이 나오지 않는 사진)
+ ├─ 운동회_뒷모습.jpg
+ ├─ 도서관.jpg
+ ├─ 학교로고.png
+ ├─ 학교소개.txt          (교훈, 교육 목표, 특색 활동)
+ └─ 원하는문구.txt        (영상에 꼭 넣고 싶은 문장)</pre>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>자료 폴더에 있는 사진과 문서만 사용해서 우리 학교 홍보 모션그래픽 영상을 다시 만들어줘.
+
+- 학교소개.txt와 원하는문구.txt를 읽고 장면 대본을 먼저 보여줘.
+- 사진은 파일 이름을 보고 어울리는 장면에 배치하고, 천천히 확대되는 효과를 넣어줘.
+- 학교로고.png는 첫 장면과 마지막 장면에 넣어줘.
+- 길이는 40초, 1920×1080, MP4로 렌더링해줘.
+
+대본을 내가 확인한 다음에 영상을 만들어줘.</pre>
+          </div>
+          <div class="note info"><b>사진 이름을 알아보기 쉽게</b><code>IMG_0412.jpg</code>보다 <code>운동회_뒷모습.jpg</code>처럼 이름을 붙이면 Codex가 장면에 맞는 사진을 더 잘 고릅니다.</div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== 마무리 미션 ===================== -->
     <section id="mission" data-practice aria-labelledby="h-mission">
       <div class="practice-head">
@@ -1122,7 +1369,7 @@ pptx → 프레젠테이션
     <!-- ===================== 정리 ===================== -->
     <section aria-labelledby="h-levels">
       <span class="eyebrow">Ⅲ · Ⅳ 정리</span>
-      <h2 id="h-levels">다섯 가지 실습 돌아보기</h2>
+      <h2 id="h-levels">일곱 가지 실습 돌아보기</h2>
       <div class="stack">
         <div class="table-wrap">
           <table class="levels">
@@ -1133,6 +1380,8 @@ pptx → 프레젠테이션
               <tr><td>3 · 수업용 퀴즈</td><td>기존 프로그램 확장</td><td class="stars">★★☆☆☆</td></tr>
               <tr><td>4 · 설문 분석 대시보드</td><td>데이터 분석 자동화</td><td class="stars">★★★☆☆</td></tr>
               <tr><td>5 · 파일 자동 정리</td><td>실제 업무 자동화</td><td class="stars">★★★★☆</td></tr>
+              <tr><td>6 · 계획서 만들기</td><td>양식 학습과 한글 문서 자동 작성</td><td class="stars">★★★☆☆</td></tr>
+              <tr><td>7 · 학교 홍보영상</td><td>인터넷 자료로 모션그래픽 영상 제작</td><td class="stars">★★★★☆</td></tr>
             </tbody>
           </table>
         </div>
