@@ -268,6 +268,9 @@ tr:last-child td { border-bottom: 0; }
 .credit .who { color: var(--ink); font-weight: 700; }
 .credit a { font-weight: 700; }
 .mail-copy { font: inherit; font-size: .8125rem; font-weight: 700; color: var(--accent); background: var(--tint); border: 1px solid var(--accent-soft); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+.short { margin-top: 10px; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; background: var(--surface); border: 1.5px solid var(--accent-soft); border-radius: 12px; padding: 6px 8px 6px 14px; }
+.short span { font-size: .875rem; color: var(--muted); }
+.short a { font-weight: 900; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: .9375rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 30; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .footer { margin-top: 48px; font-size: .8125rem; color: var(--muted); }
@@ -320,6 +323,7 @@ tr:last-child td { border-bottom: 0; }
         <p>코딩을 몰라도 만드는 나만의 교육용 프로그램</p>
         <div class="tags"><span>데스크탑 에이전트</span><span>실습 7개 + 나만의 프로그램</span><span>OpenAI Codex</span></div>
         <p class="maker">제작 <b>횡계초등학교 교사 이권영</b></p>
+        <div class="short"><span>이 교재 주소</span><a href="https://gw1.kr/26코덱스" id="shortUrl">gw1.kr/26코덱스</a><button class="mail-copy" type="button" id="shortCopy">주소 복사</button></div>
       </div>
       <img src="assets/hero.png" alt="노트북 옆에 앉은 로봇 도우미" width="675" height="348">
     </div>
@@ -1657,6 +1661,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
     <div class="credit">
       <span class="who">제작 · 횡계초등학교 교사 이권영</span>
       <span>문의 <a href="mailto:kike8282@gw1.kr" id="mail">kike8282@gw1.kr</a></span>
+      <span>교재 주소 <a href="https://gw1.kr/26코덱스">gw1.kr/26코덱스</a></span>
       <button class="mail-copy" type="button" id="mailCopy">메일 주소 복사</button>
     </div>
     <p class="footer" style="margin-top:12px">2026 강릉교육지원청 생성형AI 연수 · 교원 대상 Codex 첫걸음 · 체크 표시는 이 브라우저에만 저장됩니다.</p>
@@ -1759,6 +1764,14 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
     const addr = "kike8282@gw1.kr";
     const ok = () => showToast("메일 주소를 복사했어요.");
     const pick = () => { const range = document.createRange(); range.selectNodeContents(document.getElementById("mail")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range); showToast("선택된 주소를 Ctrl+C로 복사하세요."); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(ok, pick); else pick();
+  });
+
+  // 교재 주소 복사
+  document.getElementById("shortCopy").addEventListener("click", () => {
+    const addr = "https://gw1.kr/26코덱스";
+    const ok = () => showToast("교재 주소를 복사했어요.");
+    const pick = () => { const range = document.createRange(); range.selectNodeContents(document.getElementById("shortUrl")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range); showToast("선택된 주소를 Ctrl+C로 복사하세요."); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(ok, pick); else pick();
   });
 
