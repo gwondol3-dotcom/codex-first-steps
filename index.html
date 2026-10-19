@@ -446,7 +446,7 @@ tr:last-child td { border-bottom: 0; }
               </div>
               <div class="tile">
                 <h4>Python</h4>
-                <p>실습 5를 Python 창 프로그램으로 만들 때 필요합니다. 설치 첫 화면에서 <b>Add python.exe to PATH</b>를 꼭 체크합니다.</p>
+                <p>Codex가 문서(hwpx·PDF)나 파일을 다룰 때 Python을 쓰는 경우가 있어 설치해 두면 편합니다. 설치 첫 화면에서 <b>Add python.exe to PATH</b>를 꼭 체크합니다.</p>
                 <a class="link-btn" href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python <small>python.org</small></a>
               </div>
             </div>
@@ -1041,109 +1041,144 @@ HTML 파일로 실행할 수 있도록 해줘.</pre>
       <div class="practice-head">
         <div>
           <span class="eyebrow">실습 5</span>
-          <h2 id="h-p5">학교 파일 자동 정리 프로그램</h2>
-          <div class="meta"><span>난이도 <span class="stars">★★★★☆</span></span><span>작업 폴더 <b>C:\codex-lab\05-files</b></span><span>테스트 폴더 <b>바탕화면\Codex연습</b></span><span>15분</span></div>
-          <div class="goal"><b>실습 목표</b> Codex가 컴퓨터의 실제 작업도 자동화할 수 있다는 것을 경험합니다.</div>
+          <h2 id="h-p5">Codex로 학교 파일 정리하기</h2>
+          <div class="meta"><span>난이도 <span class="stars">★★★☆☆</span></span><span>작업 폴더 <b>C:\codex-lab\05-files</b></span><span>15분</span></div>
+          <div class="goal"><b>실습 목표</b> 프로그램을 만들지 않고 Codex에게 <b>말로 직접 시켜서</b> 파일 이름 바꾸기, 폴더별 정리 같은 컴퓨터 작업을 처리합니다.</div>
         </div>
         <img src="assets/files.png" alt="" width="507" height="453">
       </div>
       <div class="stack" style="margin-top:18px">
-        <p>현장체험학습 사진의 이름을 한꺼번에 바꾸고 싶습니다. 파일이 100개라면 일일이 바꾸기 어렵습니다.</p>
+        <p>현장체험학습 사진의 이름을 한꺼번에 바꾸고 싶습니다. 파일이 100개라면 일일이 바꾸기 어렵습니다. 이번에는 Codex에게 직접 "바꿔줘"라고 시킵니다.</p>
         <div class="rename">
           <div class="col">IMG_1023.jpg<br>IMG_1024.jpg<br>IMG_1025.jpg<br>IMG_1026.jpg</div>
           <div class="arrow" aria-hidden="true">➜</div>
           <div class="col after">현장체험학습_001.jpg<br>현장체험학습_002.jpg<br>현장체험학습_003.jpg<br>현장체험학습_004.jpg</div>
         </div>
+        <div class="flow"><span>파일 확인</span><span>백업</span><span>미리보기</span><span>진행</span><span>되돌리기</span><span>폴더별 정리</span></div>
 
-        <div class="note warn"><b>매우 중요한 안전 규칙</b>첫 실습에서는 절대로 실제 업무 폴더를 사용하지 않습니다. 바탕화면의 <b>Codex연습</b> 폴더에 테스트용 파일을 넣어 실습합니다.</div>
+        <div class="note warn"><b>안전 규칙</b>이 실습은 실제 파일을 바꿉니다. 오늘은 <b>05-files 폴더 안의 연습 파일</b>로만 합니다. 실제 업무 폴더에 쓸 때도 항상 <b>백업 → 미리보기 → 진행</b> 순서를 지킵니다.</div>
 
         <div class="step">
-          <div class="step-title"><span class="badge">준비</span><h3>연습용 파일 10개 준비하기</h3></div>
-          <p><b>방법 A (추천)</b> 아래 파일을 내려받아 압축을 풉니다. <b>Codex연습</b> 폴더가 나오면 바탕화면으로 옮깁니다.</p>
+          <div class="step-title"><span class="badge">준비</span><h3>05-files 폴더에 연습 파일 10개 넣기</h3></div>
+          <p><b>방법 A (추천)</b> 아래 파일을 내려받아 <code>C:\codex-lab\05-files</code> 폴더 안에 압축을 풉니다.</p>
           <div class="dl">
             <div class="dl-icon" aria-hidden="true">ZIP</div>
-            <div><h4>Codex연습.zip · 연습 파일 10개</h4><p>사진 IMG_1023~1027.jpg 5개, 스크린샷.png, 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx · 1.8MB</p></div>
-            <a class="dl-btn" href="https://gwondol3-dotcom.github.io/codex-first-steps/downloads/codex-practice-files.zip" download="Codex연습.zip" target="_blank" rel="noopener">내려받기</a>
+            <div><h4>실습5_연습파일.zip · 연습 파일 10개</h4><p>사진 IMG_1023~1027.jpg 5개, 스크린샷.png, 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx · 1.8MB</p></div>
+            <a class="dl-btn" href="https://gwondol3-dotcom.github.io/codex-first-steps/downloads/practice5-files.zip" download="실습5_연습파일.zip" target="_blank" rel="noopener">내려받기</a>
           </div>
-          <div class="note info"><b>압축 풀기</b>내려받은 파일을 우클릭 → [압축 풀기] 또는 [모두 압축 풀기]를 누릅니다.</div>
+          <div class="note info"><b>압축 풀기</b>내려받은 파일 우클릭 → [모두 압축 풀기] → 위치를 <code>C:\codex-lab\05-files</code>로 바꾸고 [압축 풀기]를 누릅니다. 압축 파일을 05-files에 넣고 Codex에게 "이 폴더의 zip 파일 압축을 풀어줘"라고 해도 됩니다.</div>
           <p class="or">또는</p>
-          <p><b>방법 B</b> Codex에게 연습 파일을 만들어 달라고 합니다.</p>
+          <p><b>방법 B</b> Codex 앱에서 <code>05-files</code> 폴더를 열고 연습 파일을 만들어 달라고 합니다.</p>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>바탕화면에 'Codex연습' 폴더를 만들고, 그 안에 실습용 빈 파일 10개를 만들어줘.
+<pre>이 폴더에 실습용 빈 파일 10개를 만들어줘.
 - IMG_1023.jpg ~ IMG_1027.jpg (5개)
 - 스크린샷.png, 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx
-내용은 비어 있어도 괜찮아. 다른 폴더는 건드리지 마.</pre>
+내용은 비어 있어도 괜찮아. 이 폴더 밖은 건드리지 마.</pre>
           </div>
-          <div class="note info"><b>승인 카드가 뜹니다</b>작업 폴더 밖(바탕화면)에 파일을 만들기 때문입니다. 내용을 읽고 승인하세요.</div>
+<pre class="tree">C:\codex-lab\05-files
+ ├─ IMG_1023.jpg ~ IMG_1027.jpg
+ ├─ 스크린샷.png
+ ├─ 가정통신문.pdf
+ ├─ 회의록.docx
+ ├─ 계획서.hwp
+ └─ 발표자료.pptx</pre>
         </div>
 
         <div class="step">
-          <div class="step-title"><span class="badge">STEP 1</span><h3>프로그램 만들기</h3></div>
+          <div class="step-title"><span class="badge">STEP 1</span><h3>폴더 열고 파일 확인하기</h3></div>
+          <p>Codex 앱에서 <code>C:\codex-lab\05-files</code>를 열고 새 스레드를 시작합니다.</p>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>Windows에서 사용할 수 있는 파일 이름 일괄 변경 프로그램을 만들어줘.
-
-프로그래밍을 모르는 교사가 사용하는 프로그램이야.
-
-다음 기능이 필요해.
-
-1. 폴더 선택 버튼
-2. 변경할 파일 이름 앞부분 입력
-3. 번호 시작값 입력
-4. 실행 전에 변경 결과 미리보기
-5. 파일 이름 변경 버튼
-6. 실수했을 경우 이전 이름으로 되돌리는 기능
-
-예를 들어
-
-IMG_1023.jpg
-
-를
-
-현장체험학습_001.jpg
-
-처럼 바꿀 수 있도록 만들어줘.
-
-실제 파일을 변경하기 전에 반드시 사용자에게 확인을 받도록 만들어줘.
-
-초보자가 사용하기 쉬운 화면으로 만들어줘.</pre>
+<pre>이 폴더에 있는 파일 목록을 종류별로 정리해서 보여줘.
+아직 아무것도 바꾸지 마.</pre>
           </div>
-          <div class="note info"><b>결과물 형태</b>HTML이 아니라 Python 창 프로그램이나 PowerShell 스크립트로 만들어질 수 있습니다. Codex가 알려 주는 실행 방법을 따르세요. Python이 없다면 "Python 없이 실행되는 방식으로 만들어줘"라고 요청합니다.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 2</span><h3>바꾸기 전에 백업하기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>작업하기 전에 지금 있는 파일을 모두 '원본백업' 폴더에 복사해 둬.
+원래 파일은 그대로 두고 복사만 해.</pre>
+          </div>
+          <div class="note"><b>왜 백업부터?</b>Codex가 실수해도 원본백업 폴더에서 언제든 되살릴 수 있습니다. 실제 업무에서도 이 한 줄을 습관처럼 먼저 보내세요.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 3</span><h3>사진 이름 한꺼번에 바꾸기</h3></div>
+          <p>먼저 <b>미리보기</b>만 받고, 확인한 뒤에 진행시킵니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">① 미리보기 요청</span><button class="copy" type="button">복사</button></div>
+<pre>IMG_로 시작하는 사진 파일의 이름을 '현장체험학습_001.jpg' 형식으로 바꾸고 싶어.
+파일 이름의 숫자 순서대로 001부터 번호를 붙여줘.
+원본백업 폴더 안의 파일은 건드리지 마.
+
+먼저 '지금 이름 → 바뀔 이름'을 표로 보여주고, 내가 '진행해'라고 하면 그때 바꿔줘.</pre>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">② 표를 확인한 다음</span><button class="copy" type="button">복사</button></div>
+<pre>진행해.</pre>
+          </div>
+          <div class="note info"><b>승인 카드가 뜨면</b>파일 이름을 바꾸는 명령입니다. 대상이 05-files 폴더인지 확인하고 승인합니다.</div>
           <div class="checks">
-            <div class="checks-title">이 순서로 확인하세요</div>
-            <label class="check"><input type="checkbox"><span>프로그램을 실행했다 (모르면 "실행 방법을 알려줘")</span></label>
-            <label class="check"><input type="checkbox"><span>폴더는 <b>바탕화면\Codex연습</b>만 선택했다</span></label>
-            <label class="check"><input type="checkbox"><span>앞부분 "현장체험학습", 시작 번호 1을 입력했다</span></label>
-            <label class="check"><input type="checkbox"><span>미리보기에서 IMG_1023.jpg → 현장체험학습_001.jpg를 확인했다</span></label>
-            <label class="check"><input type="checkbox"><span>확인 창에서 [예]를 눌러 실제로 이름이 바뀌었다</span></label>
-            <label class="check"><input type="checkbox"><span>[되돌리기]로 원래 이름이 복구되었다</span></label>
+            <label class="check"><input type="checkbox"><span>미리보기 표에서 IMG_1023.jpg → 현장체험학습_001.jpg를 확인했다</span></label>
+            <label class="check"><input type="checkbox"><span>파일 탐색기에서 사진 5개의 이름이 바뀐 것을 확인했다</span></label>
           </div>
         </div>
 
         <div class="step">
-          <div class="step-title"><span class="badge">STEP 2</span><h3>개선하기 · 확장자별 자동 분류</h3></div>
+          <div class="step-title"><span class="badge">STEP 4</span><h3>되돌리기와 다시 바꾸기</h3></div>
+          <p>실수했을 때 되돌릴 수 있는지 직접 확인해 봅니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">① 되돌리기</span><button class="copy" type="button">복사</button></div>
+<pre>방금 바꾼 사진 파일 이름을 원래 이름으로 되돌려줘.</pre>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">② 규칙을 바꿔 다시 바꾸기</span><button class="copy" type="button">복사</button></div>
+<pre>이번에는 '2026현장체험학습_01.jpg' 형식으로 바꿔줘.
+먼저 바뀔 이름을 표로 보여주고, 내가 '진행해'라고 하면 바꿔줘.</pre>
+          </div>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>원래 이름(IMG_1023.jpg …)으로 돌아온 것을 확인했다</span></label>
+            <label class="check"><input type="checkbox"><span>새 규칙으로 다시 바뀐 것을 확인했다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">STEP 5</span><h3>확장자별로 폴더 정리하기</h3></div>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>파일 이름뿐만 아니라 확장자별로 파일을 분류하는 기능도 추가해줘.
-
-예를 들어
+<pre>이 폴더의 파일을 확장자별로 폴더에 나누어 정리해줘.
 
 jpg, png → 사진
 pdf → PDF
 docx, hwp → 문서
 pptx → 프레젠테이션
 
-폴더로 자동 정리할 수 있도록 해줘.
-
-단, 실제 이동을 하기 전에 어떤 파일이 어디로 이동할지 미리 보여줘.</pre>
+원본백업 폴더는 건드리지 마.
+먼저 어떤 파일이 어느 폴더로 옮겨지는지 표로 보여주고, 내가 '진행해'라고 하면 옮겨줘.</pre>
           </div>
           <div class="grid2">
-            <div class="tile"><span class="k">사진</span><p>현장체험학습_001.jpg …, 스크린샷.png</p></div>
+            <div class="tile"><span class="k">사진</span><p>2026현장체험학습_01.jpg …, 스크린샷.png</p></div>
             <div class="tile"><span class="k">PDF</span><p>가정통신문.pdf</p></div>
             <div class="tile"><span class="k">문서</span><p>회의록.docx, 계획서.hwp</p></div>
             <div class="tile"><span class="k">프레젠테이션</span><p>발표자료.pptx</p></div>
           </div>
+          <div class="checks">
+            <label class="check"><input type="checkbox"><span>사진·PDF·문서·프레젠테이션 폴더 4개가 생겼다</span></label>
+            <label class="check"><input type="checkbox"><span>원본백업 폴더는 그대로 남아 있다</span></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title"><span class="badge">도전</span><h3>정리한 결과를 목록으로 남기기</h3></div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>지금 05-files 폴더의 정리 결과를 '파일목록.csv'로 만들어줘.
+열은 폴더, 파일 이름, 크기로 하고, 엑셀에서 한글이 깨지지 않게 UTF-8(BOM)으로 저장해줘.</pre>
+          </div>
+          <div class="note"><b>이번 실습의 포인트</b>Codex는 프로그램을 만들지 않고도 컴퓨터 작업을 직접 처리합니다. 그래서 <b>미리보기를 받고 '진행해'라고 말하는 습관</b>과 <b>승인 카드를 읽는 습관</b>이 가장 중요합니다.</div>
         </div>
       </div>
     </section>
@@ -1450,7 +1485,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
               <tr><td>2 · 발표자·모둠 편성기</td><td>데이터와 기능 추가</td><td class="stars">★★☆☆☆</td></tr>
               <tr><td>3 · 수업용 퀴즈</td><td>기존 프로그램 확장</td><td class="stars">★★☆☆☆</td></tr>
               <tr><td>4 · 설문 분석 대시보드</td><td>데이터 분석 자동화</td><td class="stars">★★★☆☆</td></tr>
-              <tr><td>5 · 파일 자동 정리</td><td>실제 업무 자동화</td><td class="stars">★★★★☆</td></tr>
+              <tr><td>5 · 파일 정리</td><td>Codex에게 직접 시키는 컴퓨터 작업</td><td class="stars">★★★☆☆</td></tr>
               <tr><td>6 · 계획서 만들기</td><td>양식 학습과 한글 문서 자동 작성</td><td class="stars">★★★☆☆</td></tr>
               <tr><td>7 · 학교 홍보영상</td><td>인터넷 자료로 모션그래픽 영상 제작</td><td class="stars">★★★★☆</td></tr>
             </tbody>
