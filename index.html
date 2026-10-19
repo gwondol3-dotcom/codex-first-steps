@@ -261,6 +261,7 @@ tr:last-child td { border-bottom: 0; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dl-btn { color: var(--bg); } }
 @media (max-width: 560px) { .dl { grid-template-columns: 1fr; } .dl-icon { display: none; } .dl-btn { justify-content: center; } }
 .or { text-align: center; font-size: .875rem; color: var(--muted); font-weight: 700; }
+.step.start { background: var(--tint); border-color: var(--accent-soft); box-shadow: none; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: .9375rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 30; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .footer { margin-top: 48px; font-size: .8125rem; color: var(--muted); }
@@ -469,7 +470,7 @@ python --version</pre>
       <p class="lead">앱은 자주 업데이트되어 버튼 이름이 조금씩 바뀔 수 있습니다. 강사 화면을 기준으로 따라오세요.</p>
       <div class="stack">
         <div class="grid2">
-          <div class="tile"><span class="k">① 프로젝트 · 스레드</span><p>왼쪽 <b>[+ / Open project]</b>로 폴더를 엽니다. 작업 하나에 스레드 하나를 씁니다.</p></div>
+          <div class="tile"><span class="k">① 프로젝트 · 스레드</span><p>왼쪽 <b>[+ / Open project]</b>로 폴더를 엽니다. 오늘은 <b>codex-lab</b> 하나만 열고, 실습마다 새 스레드를 씁니다.</p></div>
           <div class="tile"><span class="k">② 대화창</span><p>Codex가 지금 무엇을 하고 있는지 실시간으로 보여 줍니다.</p></div>
           <div class="tile"><span class="k">③ 입력창</span><p>요청을 입력합니다. 아래에서 모델과 생각 깊이를 고릅니다.</p></div>
           <div class="tile"><span class="k">④ 승인 카드</span><p>파일 수정이나 명령 실행 전에 허락을 구합니다. 읽고 누르세요.</p></div>
@@ -477,9 +478,9 @@ python --version</pre>
         <div class="step">
           <div class="step-title"><span class="badge">시작 순서</span><h3>폴더를 열고 새 스레드 시작</h3></div>
           <ol>
-            <li>왼쪽 <b>[+ / Open project]</b> → 처음에는 <code>C:\codex-lab</code> 선택</li>
+            <li>왼쪽 <b>[+ / Open project]</b> → <code>C:\codex-lab</code> 선택 (오늘은 이 폴더 하나만 엽니다)</li>
             <li>처음 여는 폴더는 신뢰 여부를 묻습니다. 실습 폴더이므로 <b>Trust</b>를 누릅니다.</li>
-            <li>새 스레드에서 요청합니다. 실습 하나에 스레드 하나, 주제가 바뀌면 새 스레드를 엽니다.</li>
+            <li>실습마다 <b>새 스레드</b>를 열고, 첫 문장으로 작업 폴더를 정해 줍니다. 예: "이번 작업은 C:\codex-lab\01-timer 폴더 안에서만 해줘."</li>
           </ol>
         </div>
         <div class="grid2">
@@ -496,7 +497,8 @@ python --version</pre>
 - 사용자는 코딩을 모르는 초등학교 교사다.
 - 화면의 모든 글자는 한국어로, 글씨는 크고 버튼은 단순하게 만든다.
 - 가능하면 별도 설치 없이 HTML 파일 하나로 실행되게 만든다.
-- 이 폴더 밖의 파일은 만들거나 고치지 않는다.
+- C:\codex-lab 밖의 파일은 만들거나 고치지 않는다.
+- 사용자가 정해 준 작업 폴더(예: 01-timer) 안에서만 파일을 만들고 고친다.
 - 파일을 삭제하거나 덮어쓰기 전에는 무엇을 할지 먼저 설명하고 허락을 받는다.
 - 학생 개인정보는 사용하지 않고 가상 데이터만 쓴다.
 - 작업이 끝나면 바뀐 파일 목록과 확인 방법을 3줄로 알려준다.</pre>
@@ -589,7 +591,7 @@ python --version</pre>
             <label class="check"><input type="checkbox"><span>파일 탐색기에서 C:\codex-lab 안에 폴더 8개가 생긴 것을 확인했다</span></label>
           </div>
         </div>
-        <div class="note"><b>실습 1부터는</b>각 실습의 작업 폴더(예: <code>01-timer</code>)를 왼쪽 <b>[+ / Open project]</b>로 따로 열고, 새 스레드에서 시작합니다.</div>
+        <div class="note"><b>실습 1부터는</b>폴더를 새로 열지 않습니다. <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>만 열고, 각 실습 맨 위의 "시작" 문장으로 작업 폴더를 정해 줍니다.</div>
       </div>
     </section>
 
@@ -605,6 +607,16 @@ python --version</pre>
         <img src="assets/timer.png" alt="" width="436" height="570">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\01-timer 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <div class="step">
           <div class="step-title"><span class="badge">STEP 1</span><h3>기본 프로그램 만들기</h3></div>
           <div class="prompt">
@@ -690,6 +702,16 @@ python --version</pre>
         <img src="assets/lottery.png" alt="" width="538" height="545">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\02-picker 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <div class="grid3">
           <div class="tile"><h4>발표자 랜덤 추첨</h4><p>버튼 한 번으로 한 명을 무작위 선택</p></div>
           <div class="tile"><h4>모둠 자동 편성</h4><p>2명·3명·4명 단위로 랜덤 모둠</p></div>
@@ -795,6 +817,16 @@ HTML 파일 하나만 실행하면 사용할 수 있도록 만들어줘.</pre>
         <img src="assets/quiz.png" alt="" width="813" height="736">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\03-quiz 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <div class="quiz" id="demoQuiz">
           <div class="checks-title" style="margin-bottom:6px">완성 모습 미리 보기 · 직접 눌러 보세요</div>
           <div class="q">신라가 삼국을 통일하는 과정에서 당나라와 연합하여 먼저 멸망시킨 나라는?</div>
@@ -895,6 +927,16 @@ HTML 파일로 실행할 수 있도록 만들어줘.</pre>
         <img src="assets/chart.png" alt="" width="494" height="511">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\04-survey 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <p>학생 30명에게 수업 만족도 설문을 했다고 가정합니다. 각 항목은 1~5점입니다.</p>
         <div class="table-wrap">
           <table>
@@ -1048,6 +1090,16 @@ HTML 파일로 실행할 수 있도록 해줘.</pre>
         <img src="assets/files.png" alt="" width="507" height="453">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\05-files 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <p>현장체험학습 사진의 이름을 한꺼번에 바꾸고 싶습니다. 파일이 100개라면 일일이 바꾸기 어렵습니다. 이번에는 Codex에게 직접 "바꿔줘"라고 시킵니다.</p>
         <div class="rename">
           <div class="col">IMG_1023.jpg<br>IMG_1024.jpg<br>IMG_1025.jpg<br>IMG_1026.jpg</div>
@@ -1068,13 +1120,13 @@ HTML 파일로 실행할 수 있도록 해줘.</pre>
           </div>
           <div class="note info"><b>압축 풀기</b>내려받은 파일 우클릭 → [모두 압축 풀기] → 위치를 <code>C:\codex-lab\05-files</code>로 바꾸고 [압축 풀기]를 누릅니다. 압축 파일을 05-files에 넣고 Codex에게 "이 폴더의 zip 파일 압축을 풀어줘"라고 해도 됩니다.</div>
           <p class="or">또는</p>
-          <p><b>방법 B</b> Codex 앱에서 <code>05-files</code> 폴더를 열고 연습 파일을 만들어 달라고 합니다.</p>
+          <p><b>방법 B</b> 위의 시작 문장을 보낸 다음, Codex에게 연습 파일을 만들어 달라고 합니다.</p>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>이 폴더에 실습용 빈 파일 10개를 만들어줘.
+<pre>05-files 폴더에 실습용 빈 파일 10개를 만들어줘.
 - IMG_1023.jpg ~ IMG_1027.jpg (5개)
 - 스크린샷.png, 가정통신문.pdf, 회의록.docx, 계획서.hwp, 발표자료.pptx
-내용은 비어 있어도 괜찮아. 이 폴더 밖은 건드리지 마.</pre>
+내용은 비어 있어도 괜찮아. 05-files 폴더 밖은 건드리지 마.</pre>
           </div>
 <pre class="tree">C:\codex-lab\05-files
  ├─ IMG_1023.jpg ~ IMG_1027.jpg
@@ -1086,11 +1138,10 @@ HTML 파일로 실행할 수 있도록 해줘.</pre>
         </div>
 
         <div class="step">
-          <div class="step-title"><span class="badge">STEP 1</span><h3>폴더 열고 파일 확인하기</h3></div>
-          <p>Codex 앱에서 <code>C:\codex-lab\05-files</code>를 열고 새 스레드를 시작합니다.</p>
+          <div class="step-title"><span class="badge">STEP 1</span><h3>파일 확인하기</h3></div>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>이 폴더에 있는 파일 목록을 종류별로 정리해서 보여줘.
+<pre>05-files 폴더에 있는 파일 목록을 종류별로 정리해서 보여줘.
 아직 아무것도 바꾸지 마.</pre>
           </div>
         </div>
@@ -1149,7 +1200,7 @@ HTML 파일로 실행할 수 있도록 해줘.</pre>
           <div class="step-title"><span class="badge">STEP 5</span><h3>확장자별로 폴더 정리하기</h3></div>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>이 폴더의 파일을 확장자별로 폴더에 나누어 정리해줘.
+<pre>05-files 폴더의 파일을 확장자별로 폴더에 나누어 정리해줘.
 
 jpg, png → 사진
 pdf → PDF
@@ -1195,6 +1246,16 @@ pptx → 프레젠테이션
         <img src="assets/plan.png" alt="" width="426" height="533">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\06-plan 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <div class="flow"><span>양식 학습</span><span>참고자료 읽기</span><span>hwpx로 만들기</span><span>한글에서 확인·수정</span></div>
 
         <div class="grid3">
@@ -1210,7 +1271,7 @@ pptx → 프레젠테이션
           <ol>
             <li>파일 탐색기에서 실습 시작 전에 만든 <code>C:\codex-lab\06-plan</code> 폴더를 엽니다.</li>
             <li>아래 실습 파일을 내려받아 압축을 풀고, 나온 <b>양식 파일</b>과 <b>참고파일 폴더</b>를 이 폴더에 넣습니다.</li>
-            <li>Codex 앱에서 <code>06-plan</code> 폴더를 열고 새 스레드를 시작합니다.</li>
+            <li>위의 시작 문장을 보낸 다음 STEP 1로 넘어갑니다.</li>
           </ol>
 <div class="dl">
             <div class="dl-icon" aria-hidden="true">ZIP</div>
@@ -1236,7 +1297,7 @@ pptx → 프레젠테이션
           <p>먼저 양식만 분석하게 합니다. 이 단계에서는 파일을 만들지 않습니다.</p>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>이 폴더의 '2026학년도 학생도박예방교육 계획(00초등학교).hwpx'는 우리 학교 계획서 양식이야.
+<pre>06-plan 폴더의 '2026학년도 학생도박예방교육 계획(00초등학교).hwpx'는 우리 학교 계획서 양식이야.
 
 hwpx 파일 안의 구조를 분석해서 다음을 정리해줘. 아직 새 파일은 만들지 마.
 
@@ -1255,7 +1316,7 @@ hwpx 파일 안의 구조를 분석해서 다음을 정리해줘. 아직 새 파
           <div class="step-title"><span class="badge">STEP 2</span><h3>참고자료 읽고 내용 정리하기</h3></div>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>참고파일 폴더에 있는 자료를 모두 읽고, '2026학년도 언어폭력 예방교육주간 운영 계획'에 들어갈 내용을 정리해줘. 아직 파일은 만들지 마.
+<pre>06-plan\참고파일 폴더에 있는 자료를 모두 읽고, '2026학년도 언어폭력 예방교육주간 운영 계획'에 들어갈 내용을 정리해줘. 아직 파일은 만들지 마.
 
 - 운영 기간, 대상, 주제
 - 학년군별(1-2학년, 3-4학년, 5-6학년) 교육 내용
@@ -1343,6 +1404,16 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
         <img src="assets/video.png" alt="" width="498" height="373">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\07-video 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <div class="flow"><span>학교 자료 찾기</span><span>대본 확인</span><span>영상 만들기</span><span>MP4 확인·수정</span></div>
 
         <div class="grid2">
@@ -1367,7 +1438,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
 
 자료를 어디서 가져왔는지 출처도 함께 알려줘. 아직 영상은 만들지 마.</pre>
           </div>
-          <div class="note"><b>인터넷 검색이 안 된다고 하면</b>학교 누리집의 학교 소개 글을 복사해 <code>학교소개.txt</code>로 저장해 폴더에 넣고 "학교소개.txt를 읽고 대본을 써줘"라고 요청합니다.</div>
+          <div class="note"><b>인터넷 검색이 안 된다고 하면</b>학교 누리집의 학교 소개 글을 복사해 <code>학교소개.txt</code>로 저장해 07-video 폴더에 넣고 "학교소개.txt를 읽고 대본을 써줘"라고 요청합니다.</div>
         </div>
 
         <div class="step">
@@ -1383,11 +1454,11 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
 - 학생 얼굴이 나오는 사진은 쓰지 마.
 - 마지막 장면에는 학교 이름과 누리집 주소를 보여줘.
 
-완성되면 out 폴더에 MP4로 렌더링하고, 미리보기 방법도 알려줘.</pre>
+완성되면 07-video\out 폴더에 MP4로 렌더링하고, 미리보기 방법도 알려줘.</pre>
           </div>
           <div class="checks">
             <div class="checks-title">확인해 볼 것</div>
-            <label class="check"><input type="checkbox"><span>out 폴더에 MP4 파일이 생겼다</span></label>
+            <label class="check"><input type="checkbox"><span>07-video\out 폴더에 MP4 파일이 생겼다</span></label>
             <label class="check"><input type="checkbox"><span>영상 길이가 약 30초이고 장면이 자연스럽게 넘어간다</span></label>
             <label class="check"><input type="checkbox"><span>학교 이름, 교훈, 주소가 정확하다</span></label>
           </div>
@@ -1420,7 +1491,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
  └─ 원하는문구.txt        (영상에 꼭 넣고 싶은 문장)</pre>
           <div class="prompt">
             <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
-<pre>자료 폴더에 있는 사진과 문서만 사용해서 우리 학교 홍보 모션그래픽 영상을 다시 만들어줘.
+<pre>07-video\자료 폴더에 있는 사진과 문서만 사용해서 우리 학교 홍보 모션그래픽 영상을 다시 만들어줘.
 
 - 학교소개.txt와 원하는문구.txt를 읽고 장면 대본을 먼저 보여줘.
 - 사진은 파일 이름을 보고 어울리는 장면에 배치하고, 천천히 확대되는 효과를 넣어줘.
@@ -1446,6 +1517,16 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
         <img src="assets/rocket.png" alt="" width="421" height="592">
       </div>
       <div class="stack" style="margin-top:18px">
+        <div class="step start">
+          <div class="step-title"><span class="badge">시작</span><h3>새 스레드 열고 작업 폴더 정하기</h3></div>
+          <p>Codex 앱 왼쪽의 <b>codex-lab</b> 프로젝트에서 <b>새 스레드</b>를 열고, 아래 문장을 가장 먼저 보냅니다. 폴더를 새로 열 필요는 없습니다.</p>
+          <div class="prompt">
+            <div class="prompt-head"><span class="dots"><i></i><i></i><i></i></span><span class="label">첫 문장 · Codex 입력창에 붙여넣기</span><button class="copy" type="button">복사</button></div>
+<pre>이번 작업은 C:\codex-lab\08-mine 폴더 안에서만 해줘.
+파일은 모두 이 폴더에 만들고, 다른 폴더는 건드리지 마.</pre>
+          </div>
+        </div>
+
         <div class="flow"><span>자리 배치</span><span>청소당번 추첨</span><span>급식 만족도 조사</span><span>수업 타이머</span><span>발표 순서 추첨</span><span>모둠 편성</span><span>받아쓰기 연습</span><span>구구단 게임</span><span>영어 단어 퀴즈</span><span>사진 파일 정리</span><span>설문 결과 분석</span></div>
         <div class="step">
           <div class="step-title"><span class="badge">STEP 1</span><h3>먼저 기능을 제안받기</h3></div>
@@ -1550,6 +1631,7 @@ PDF와 이미지는 글자를 직접 읽어서 정리해줘.
           <thead><tr><th>상황</th><th>해결 방법</th></tr></thead>
           <tbody>
             <tr><td>폴더가 안 열리거나 Trust 오류</td><td style="white-space:normal">경로에 한글·띄어쓰기가 없는지 확인합니다(C:\codex-lab 권장). 그다음 앱을 다시 시작합니다.</td></tr>
+            <tr><td>다른 실습 폴더에 파일이 생겼어요</td><td style="white-space:normal">"방금 만든 파일을 ○○ 폴더로 옮겨줘. 앞으로는 ○○ 폴더 안에서만 작업해."</td></tr>
             <tr><td>승인 카드가 너무 자주 떠요</td><td style="white-space:normal">정상입니다. 읽고 승인하는 편이 안전합니다.</td></tr>
             <tr><td>'Reconnecting…' 반복 후 실패</td><td style="white-space:normal">여러 작업을 동시에 돌리지 말고 하나씩 합니다. 1분 쉬고 다시 시도합니다.</td></tr>
             <tr><td>만든 파일이 어디 있는지 몰라요</td><td style="white-space:normal">"만든 파일 위치를 알려주고 탐색기로 열어줘."</td></tr>
